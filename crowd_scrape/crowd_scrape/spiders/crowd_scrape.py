@@ -1,10 +1,12 @@
 # A python code to scrape data from crowdfund websites.
-# @Evan M. Wilson
+# @Evan M. Wilson 2017
+
+# Use with 'scrapy crawl kicker' in top directory
 
 import scrapy
 
 # KickstartSpider is a subclass of spider and must implement these
-# functions start_requests() and parse
+# functions: start_requests() and parse()
 
 class KickstartSpider(scrapy.Spider):
     name = "kicker"

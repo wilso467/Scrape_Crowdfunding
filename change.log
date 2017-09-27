@@ -1,3 +1,8 @@
 9/18/2017
 
 Created GitHub repository.  Migrated some files from local storage to repository.
+
+9/27/2017
+
+Pushed an update that includes functions that scrape desired data using xpaths
+and iterates through all internal links in a domain.
