@@ -1,3 +1,66 @@
-funding_target,num_backers,name,total_raised
-"$1,069","""32""",2084: The New Order,$620
-"$22,075","""694""","Electric Paint Lamp Kit - paint, plug and play!","$44,434"
+funding_target,total_raised,name,num_backers
+"$4,000",1675.0,Star Trucker Comic Book Issue #2 - Part of Projects of Earth by Jackson Rahl —,
+"$25,000",20761.0,Igniting Queen City Clay by Queen City Clay —,
+"$30,000",41696.0,The Flying Martha Ornithopter by Emily Fischer —,
+"$12,000",10716.0,The 3rd Hawaii Sketch Comedy Festival by The Hawaii Sketch Comedy Festival —,
+"$10,000",54953.0,Cubroid - Teaching coding to help kids feel creative! by Cubroid —,
+"$25,000",23440.0,War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —,
+"$6,000",6000.0,UNHEARD: The Voices of Iraq by Sam Kimball —,
+"$32,000",24961.0,Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —,
+"$20,000",196124.0,PAKA - The Alpaca Wool Sweater by PAKA —,
+"$15,000",22349.0,Stylish Travel Essentials - Convertible Tote Bag &amp; Backpack by Kaleido Concepts —,
+"$3,100",1233.0,Burden of Joy Costume and Set by Maureen —,
+num_backers,total_raised,funding_target,name
+,2191.0,,The next step - setting up my first ceramics studio! by Meghan Downs —
+,1233.0,,Burden of Joy Costume and Set by Maureen —
+,1675.0,,Star Trucker Comic Book Issue #2 - Part of Projects of Earth by Jackson Rahl —
+,20761.0,,Igniting Queen City Clay by Queen City Clay —
+,10716.0,,The 3rd Hawaii Sketch Comedy Festival by The Hawaii Sketch Comedy Festival —
+,54953.0,,Cubroid - Teaching coding to help kids feel creative! by Cubroid —
+,4389.0,,Faim Magazine - Issue 1 by Naiara Reig &amp; Axel Benassis —
+,23440.0,,War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —
+,6587.0,,"Café Artum: Art, Records &amp; Coffee by Café Artum —"
+,6000.0,,UNHEARD: The Voices of Iraq by Sam Kimball —
+,11339.0,,Intrepid Izzy - PC / Dreamcast / PS4 by Senile Team —
+,24961.0,,Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —
+,43200.0,,Xul / Cortometraje by Uxbal Ramírez —
+,196124.0,,PAKA - The Alpaca Wool Sweater by PAKA —
+,22349.0,,Stylish Travel Essentials - Convertible Tote Bag &amp; Backpack by Kaleido Concepts —
+,67234.0,,SPLATWARE | One of a kind tableware by Granby Workshop —
+,41696.0,,The Flying Martha Ornithopter by Emily Fischer —
+num_backers,funding_target,name,total_raised
+,"$3,100",Burden of Joy Costume and Set by Maureen —,1233.0
+,"$6,625",The next step - setting up my first ceramics studio! by Meghan Downs —,2191.0
+,"$4,000",Star Trucker Comic Book Issue #2 - Part of Projects of Earth by Jackson Rahl —,1675.0
+,"$25,000",Igniting Queen City Clay by Queen City Clay —,20761.0
+,"$12,000",The 3rd Hawaii Sketch Comedy Festival by The Hawaii Sketch Comedy Festival —,10716.0
+,"$10,000",Cubroid - Teaching coding to help kids feel creative! by Cubroid —,54953.0
+,"$10,534",Faim Magazine - Issue 1 by Naiara Reig &amp; Axel Benassis —,4389.0
+,"$25,000",War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —,23620.0
+,"$6,000",UNHEARD: The Voices of Iraq by Sam Kimball —,6000.0
+,"$13,251","Café Artum: Art, Records &amp; Coffee by Café Artum —",6587.0
+,"$32,000",Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —,24961.0
+,"$40,967",Intrepid Izzy - PC / Dreamcast / PS4 by Senile Team —,11339.0
+,"$2,736",Xul / Cortometraje by Uxbal Ramírez —,43200.0
+,"$20,000",PAKA - The Alpaca Wool Sweater by PAKA —,196238.0
+,"$15,000",Stylish Travel Essentials - Convertible Tote Bag &amp; Backpack by Kaleido Concepts —,22349.0
+,"$53,007",SPLATWARE | One of a kind tableware by Granby Workshop —,67234.0
+,"$30,000",The Flying Martha Ornithopter by Emily Fischer —,41696.0
+total_raised,funding_target,num_backers,name
+1233.0,"$3,100",,Burden of Joy Costume and Set by Maureen —
+2191.0,"$6,625",,The next step - setting up my first ceramics studio! by Meghan Downs —
+1675.0,"$4,000",,Star Trucker Comic Book Issue #2 - Part of Projects of Earth by Jackson Rahl —
+10716.0,"$12,000",,The 3rd Hawaii Sketch Comedy Festival by The Hawaii Sketch Comedy Festival —
+54953.0,"$10,000",,Cubroid - Teaching coding to help kids feel creative! by Cubroid —
+4389.0,"$10,534",,Faim Magazine - Issue 1 by Naiara Reig &amp; Axel Benassis —
+23620.0,"$25,000",,War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —
+6587.0,"$13,251",,"Café Artum: Art, Records &amp; Coffee by Café Artum —"
+6000.0,"$6,000",,UNHEARD: The Voices of Iraq by Sam Kimball —
+11339.0,"$40,967",,Intrepid Izzy - PC / Dreamcast / PS4 by Senile Team —
+24961.0,"$32,000",,Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —
+43200.0,"$2,736",,Xul / Cortometraje by Uxbal Ramírez —
+196467.0,"$20,000",,PAKA - The Alpaca Wool Sweater by PAKA —
+22349.0,"$15,000",,Stylish Travel Essentials - Convertible Tote Bag &amp; Backpack by Kaleido Concepts —
+20761.0,"$25,000",,Igniting Queen City Clay by Queen City Clay —
+67234.0,"$53,007",,SPLATWARE | One of a kind tableware by Granby Workshop —
+41696.0,"$30,000",,The Flying Martha Ornithopter by Emily Fischer —

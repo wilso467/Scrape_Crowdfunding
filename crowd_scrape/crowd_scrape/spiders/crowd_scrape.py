@@ -18,7 +18,7 @@ class Project_Item(scrapy.Item):
 class TestSpider(scrapy.spiders.CrawlSpider):
     name = 'test'
     allowed_domains = ['kickstarter.com']
-    start_urls = ['http://www.kickstarter.com/discover']
+    start_urls = ['https://www.kickstarter.com/']#['http://www.kickstarter.com/discover']
 
     #allowed_domains = ['stackoverflow.com']
     #start_urls = ['http://www.stackoverflow.com/']
@@ -28,8 +28,8 @@ class TestSpider(scrapy.spiders.CrawlSpider):
         #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('projects')
         #                                                        ), callback='parse_xpaths')
 
-        #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor()),
-        scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(#allow=('projects'),
+        #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow='discover')),
+        scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('discover','projects'),
                                                                 deny=('blog', 'profile', 'comments', 'posts', 'community','faqs', 'updates', 'login')
                                                                 ), callback='parse_xpaths', follow=True),
 
@@ -51,36 +51,46 @@ class TestSpider(scrapy.spiders.CrawlSpider):
         #self.logger.info('Hi, this is an web page! DOOT DOOOT %s', response.url)
 
         try:
-            name = response.xpath(
-                             '//*[contains(concat('
-                             ' " ", @class, " " ), concat( " ", "medium", " " )) and contains('
-                             'concat( " ", @class, " " ), concat( " ", "mb3", " " ))]').re(r'(\n.*\n)')[0].strip()
+            #Use this one
+            name = response.xpath('//html/head/title').re(r'(\n.*\n)')[0].strip()
 
-            pledge_numbers = response.xpath(
-                '//*[contains(concat( " ", @class, " " ), concat( " ", "js-usd_pledged", " " ))]/text()').re(
-                r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0].strip()
-
+            # name = response.xpath(
+            #                  '//*[contains(concat('
+            #                  ' " ", @class, " " ), concat( " ", "medium", " " )) and contains('
+            #                  'concat( " ", @class, " " ), concat( " ", "mb3", " " ))]').re(r'(\n.*\n)')[0].strip()
+            #
+            # pledge_numbers = response.xpath(
+            #     '//*[contains(concat( " ", @class, " " ), concat( " ", "js-usd_pledged", " " ))]/text()').re(
+            #     r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0].strip()
+            #Use this one
+            pledge_numbers=response.xpath('//*[@id="pledged"]').re(r'(?<=data-pledged=)"(.*[0-9])')[0]
+            #
+            #Use this one
             goal = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]').re(
                 r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0].strip()
 
+            #goal = response.xpath('//*[@id="content-wrap"]/section/div/div[3]/div/div/div[3]/div[1]/span[3]/span[1]').re(r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0]
+            #
+            #Use this one
             backers = response.xpath('//*[(@id = "backers_count")]').re(r'"[-0-9.,]*"')[0].strip()
-
-            print('\n', 'The name of the project is: ', name)
-            print('\n', 'Total raised: ', pledge_numbers)
-            print('\n', 'Funding target: ', goal)
-            print('\n', 'Number of backers: ', backers)
-
+            #
+            # print('\n', 'The name of the project is: ', name)
+            # print('\n', 'Total raised: ', pledge_numbers)
+            # print('\n', 'Funding target: ', goal)
+            # print('\n', 'Number of backers: ', backers)
+            #
             item = Project_Item()
             item['name']=name
             item['total_raised']=pledge_numbers
             item['funding_target']=goal
-            item['num_backers']=backers
+            # item['num_backers']=backers
             return item
 
 
         except IndexError:
             # print('Caught IndexError parsing name')
-            pass
+            print('This url through an exception on parse: ', response.url)
+            #pass
 
 
 
