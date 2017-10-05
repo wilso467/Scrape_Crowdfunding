@@ -5,6 +5,7 @@
 
 import scrapy
 from scrapy.linkextractors import LinkExtractor
+from scrapy.exceptions import DropItem
 
 # KickstartSpider is a subclass of spider and must implement these
 # functions: start_requests() and parse()
@@ -83,7 +84,7 @@ class TestSpider(scrapy.spiders.CrawlSpider):
             item['name']=name
             item['total_raised']=pledge_numbers
             item['funding_target']=goal
-            # item['num_backers']=backers
+            item['num_backers']=backers
             return item
 
 
@@ -92,11 +93,18 @@ class TestSpider(scrapy.spiders.CrawlSpider):
             print('This url through an exception on parse: ', response.url)
             #pass
 
+class DuplicatesPipeline(object):
+    def __init__(self):
+            self.ids_seen = set()
 
-
-
-
-
+    def process_item(self, item, spider):
+            #if item['id'] in self.ids_seen:
+            if item['name'] in self.ids_seen:
+                raise DropItem("Duplicate item found: %s" % item)
+            else:
+                #self.ids_seen.add(item['id'])
+                self.ids_seen.add(item['name'])
+                return item
 
 
 

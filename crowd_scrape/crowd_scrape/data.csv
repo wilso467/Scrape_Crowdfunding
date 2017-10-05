@@ -1,66 +1,495 @@
-funding_target,total_raised,name,num_backers
-"$4,000",1675.0,Star Trucker Comic Book Issue #2 - Part of Projects of Earth by Jackson Rahl —,
-"$25,000",20761.0,Igniting Queen City Clay by Queen City Clay —,
-"$30,000",41696.0,The Flying Martha Ornithopter by Emily Fischer —,
-"$12,000",10716.0,The 3rd Hawaii Sketch Comedy Festival by The Hawaii Sketch Comedy Festival —,
-"$10,000",54953.0,Cubroid - Teaching coding to help kids feel creative! by Cubroid —,
-"$25,000",23440.0,War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —,
-"$6,000",6000.0,UNHEARD: The Voices of Iraq by Sam Kimball —,
-"$32,000",24961.0,Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —,
-"$20,000",196124.0,PAKA - The Alpaca Wool Sweater by PAKA —,
-"$15,000",22349.0,Stylish Travel Essentials - Convertible Tote Bag &amp; Backpack by Kaleido Concepts —,
-"$3,100",1233.0,Burden of Joy Costume and Set by Maureen —,
-num_backers,total_raised,funding_target,name
-,2191.0,,The next step - setting up my first ceramics studio! by Meghan Downs —
-,1233.0,,Burden of Joy Costume and Set by Maureen —
-,1675.0,,Star Trucker Comic Book Issue #2 - Part of Projects of Earth by Jackson Rahl —
-,20761.0,,Igniting Queen City Clay by Queen City Clay —
-,10716.0,,The 3rd Hawaii Sketch Comedy Festival by The Hawaii Sketch Comedy Festival —
-,54953.0,,Cubroid - Teaching coding to help kids feel creative! by Cubroid —
-,4389.0,,Faim Magazine - Issue 1 by Naiara Reig &amp; Axel Benassis —
-,23440.0,,War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —
-,6587.0,,"Café Artum: Art, Records &amp; Coffee by Café Artum —"
-,6000.0,,UNHEARD: The Voices of Iraq by Sam Kimball —
-,11339.0,,Intrepid Izzy - PC / Dreamcast / PS4 by Senile Team —
-,24961.0,,Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —
-,43200.0,,Xul / Cortometraje by Uxbal Ramírez —
-,196124.0,,PAKA - The Alpaca Wool Sweater by PAKA —
-,22349.0,,Stylish Travel Essentials - Convertible Tote Bag &amp; Backpack by Kaleido Concepts —
-,67234.0,,SPLATWARE | One of a kind tableware by Granby Workshop —
-,41696.0,,The Flying Martha Ornithopter by Emily Fischer —
-num_backers,funding_target,name,total_raised
-,"$3,100",Burden of Joy Costume and Set by Maureen —,1233.0
-,"$6,625",The next step - setting up my first ceramics studio! by Meghan Downs —,2191.0
-,"$4,000",Star Trucker Comic Book Issue #2 - Part of Projects of Earth by Jackson Rahl —,1675.0
-,"$25,000",Igniting Queen City Clay by Queen City Clay —,20761.0
-,"$12,000",The 3rd Hawaii Sketch Comedy Festival by The Hawaii Sketch Comedy Festival —,10716.0
-,"$10,000",Cubroid - Teaching coding to help kids feel creative! by Cubroid —,54953.0
-,"$10,534",Faim Magazine - Issue 1 by Naiara Reig &amp; Axel Benassis —,4389.0
-,"$25,000",War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —,23620.0
-,"$6,000",UNHEARD: The Voices of Iraq by Sam Kimball —,6000.0
-,"$13,251","Café Artum: Art, Records &amp; Coffee by Café Artum —",6587.0
-,"$32,000",Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —,24961.0
-,"$40,967",Intrepid Izzy - PC / Dreamcast / PS4 by Senile Team —,11339.0
-,"$2,736",Xul / Cortometraje by Uxbal Ramírez —,43200.0
-,"$20,000",PAKA - The Alpaca Wool Sweater by PAKA —,196238.0
-,"$15,000",Stylish Travel Essentials - Convertible Tote Bag &amp; Backpack by Kaleido Concepts —,22349.0
-,"$53,007",SPLATWARE | One of a kind tableware by Granby Workshop —,67234.0
-,"$30,000",The Flying Martha Ornithopter by Emily Fischer —,41696.0
-total_raised,funding_target,num_backers,name
-1233.0,"$3,100",,Burden of Joy Costume and Set by Maureen —
-2191.0,"$6,625",,The next step - setting up my first ceramics studio! by Meghan Downs —
-1675.0,"$4,000",,Star Trucker Comic Book Issue #2 - Part of Projects of Earth by Jackson Rahl —
-10716.0,"$12,000",,The 3rd Hawaii Sketch Comedy Festival by The Hawaii Sketch Comedy Festival —
-54953.0,"$10,000",,Cubroid - Teaching coding to help kids feel creative! by Cubroid —
-4389.0,"$10,534",,Faim Magazine - Issue 1 by Naiara Reig &amp; Axel Benassis —
-23620.0,"$25,000",,War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —
-6587.0,"$13,251",,"Café Artum: Art, Records &amp; Coffee by Café Artum —"
-6000.0,"$6,000",,UNHEARD: The Voices of Iraq by Sam Kimball —
-11339.0,"$40,967",,Intrepid Izzy - PC / Dreamcast / PS4 by Senile Team —
-24961.0,"$32,000",,Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —
-43200.0,"$2,736",,Xul / Cortometraje by Uxbal Ramírez —
-196467.0,"$20,000",,PAKA - The Alpaca Wool Sweater by PAKA —
-22349.0,"$15,000",,Stylish Travel Essentials - Convertible Tote Bag &amp; Backpack by Kaleido Concepts —
-20761.0,"$25,000",,Igniting Queen City Clay by Queen City Clay —
-67234.0,"$53,007",,SPLATWARE | One of a kind tableware by Granby Workshop —
-41696.0,"$30,000",,The Flying Martha Ornithopter by Emily Fischer —
+name,num_backers,funding_target,total_raised
+The Flying Martha Ornithopter by Emily Fischer —,"""605""","$30,000",41840.0
+SPLATWARE | One of a kind tableware by Granby Workshop —,"""701""","$53,064",67608.0
+Blights Out for Mayor by Blights Out —,"""150""","$12,500",8675.0
+ORGANICALLY MAINE by Tom Hunt —,"""92""","$1,500",3048.0
+Dream Crasher: Volume One by Daniel Stalter —,"""99""","$4,500",4628.0
+HELLO! FAT CROW! by Jason Flowers —,"""89""","$5,000",5085.0
+Dead Moon: The Book by Mississippi Records —,"""581""","$50,000",47810.0
+UNHEARD: The Voices of Iraq by Sam Kimball —,"""76""","$6,000",6000.0
+HELLO! FAT CROW! by Jason Flowers —,"""89""","$5,000",5085.0
+HELLO! FAT CROW! by Jason Flowers —,"""89""","$5,000",5085.0
+Renaine by Squidly —,"""63""","$10,000",1996.0
+Renaine by Squidly —,"""63""","$10,000",1996.0
+Renaine by Squidly —,"""63""","$10,000",1996.0
+Renaine by Squidly —,"""63""","$10,000",1996.0
+Renaine by Squidly —,"""63""","$10,000",1996.0
+Rare Craft Matcha Green Tea from Japan by Material Matcha Uji —,"""368""","$9,414",31704.0
+Rare Craft Matcha Green Tea from Japan by Material Matcha Uji —,"""368""","$9,414",31704.0
+Rare Craft Matcha Green Tea from Japan by Material Matcha Uji —,"""368""","$9,414",31704.0
+Rare Craft Matcha Green Tea from Japan by Material Matcha Uji —,"""368""","$9,414",31704.0
+Rare Craft Matcha Green Tea from Japan by Material Matcha Uji —,"""368""","$9,414",31704.0
+Eddie &amp; Frankie: An Animation Short by Eddie and Frankie: An Animated Short —,"""4""","$6,633",107.0
+Eddie &amp; Frankie: An Animation Short by Eddie and Frankie: An Animated Short —,"""4""","$6,633",107.0
+Eddie &amp; Frankie: An Animation Short by Eddie and Frankie: An Animated Short —,"""4""","$6,633",107.0
+Eddie &amp; Frankie: An Animation Short by Eddie and Frankie: An Animated Short —,"""4""","$6,633",107.0
+Eddie &amp; Frankie: An Animation Short by Eddie and Frankie: An Animated Short —,"""4""","$6,633",107.0
+Eddie &amp; Frankie: An Animation Short by Eddie and Frankie: An Animated Short —,"""4""","$6,633",107.0
+CLOAK watches: an entire collection in one watch by CLOAK watches —,"""101""","$26,532",17918.0
+CLOAK watches: an entire collection in one watch by CLOAK watches —,"""101""","$26,532",17918.0
+CLOAK watches: an entire collection in one watch by CLOAK watches —,"""101""","$26,532",17918.0
+CLOAK watches: an entire collection in one watch by CLOAK watches —,"""101""","$26,532",17918.0
+CLOAK watches: an entire collection in one watch by CLOAK watches —,"""101""","$26,532",17918.0
+PAKA - The Alpaca Wool Sweater by PAKA —,"""1489""","$20,000",197978.0
+PAKA - The Alpaca Wool Sweater by PAKA —,"""1489""","$20,000",197978.0
+PAKA - The Alpaca Wool Sweater by PAKA —,"""1489""","$20,000",197978.0
+PAKA - The Alpaca Wool Sweater by PAKA —,"""1489""","$20,000",197978.0
+PAKA - The Alpaca Wool Sweater by PAKA —,"""1489""","$20,000",197978.0
+HELLO! FAT CROW! by Jason Flowers —,"""89""","$5,000",5085.0
+Local Government Diversity Dashboard by Kirsten Wyatt —,"""26""","$25,000",1375.0
+HELLO! FAT CROW! by Jason Flowers —,"""89""","$5,000",5085.0
+Local Government Diversity Dashboard by Kirsten Wyatt —,"""26""","$25,000",1375.0
+Local Government Diversity Dashboard by Kirsten Wyatt —,"""26""","$25,000",1375.0
+Local Government Diversity Dashboard by Kirsten Wyatt —,"""26""","$25,000",1375.0
+Local Government Diversity Dashboard by Kirsten Wyatt —,"""26""","$25,000",1375.0
+Dead Moon: The Book by Mississippi Records —,"""583""","$50,000",48030.0
+Dead Moon: The Book by Mississippi Records —,"""583""","$50,000",48030.0
+Dead Moon: The Book by Mississippi Records —,"""583""","$50,000",48030.0
+Dead Moon: The Book by Mississippi Records —,"""583""","$50,000",48030.0
+Transform Bruce Haack’s ELECTRIC LUCIFER into a rock opera by Jim Findlay —,"""93""","$10,000",7252.66
+Seeing the City: Open House New York Weekend in Photos by Open House New York —,"""71""","$30,000",3486.0
+Seeing the City: Open House New York Weekend in Photos by Open House New York —,"""71""","$30,000",3486.0
+Transform Bruce Haack’s ELECTRIC LUCIFER into a rock opera by Jim Findlay —,"""93""","$10,000",7252.66
+Seeing the City: Open House New York Weekend in Photos by Open House New York —,"""71""","$30,000",3486.0
+Transform Bruce Haack’s ELECTRIC LUCIFER into a rock opera by Jim Findlay —,"""93""","$10,000",7252.66
+Unruly Splats: Active STEM Play by Bryanne Leeming —,"""127""","$40,000",21355.0
+Seeing the City: Open House New York Weekend in Photos by Open House New York —,"""71""","$30,000",3486.0
+Transform Bruce Haack’s ELECTRIC LUCIFER into a rock opera by Jim Findlay —,"""93""","$10,000",7252.66
+Transform Bruce Haack’s ELECTRIC LUCIFER into a rock opera by Jim Findlay —,"""93""","$10,000",7252.66
+Unruly Splats: Active STEM Play by Bryanne Leeming —,"""127""","$40,000",21355.0
+Unruly Splats: Active STEM Play by Bryanne Leeming —,"""127""","$40,000",21355.0
+Seeing the City: Open House New York Weekend in Photos by Open House New York —,"""71""","$30,000",3486.0
+Blights Out for Mayor by Blights Out —,"""150""","$12,500",8675.0
+Imp King Tome 1: Set Sail for Booty! by Jeremy Lawson —,"""69""","$9,000",4099.0
+Unruly Splats: Active STEM Play by Bryanne Leeming —,"""127""","$40,000",21355.0
+Unruly Splats: Active STEM Play by Bryanne Leeming —,"""127""","$40,000",21355.0
+Imp King Tome 1: Set Sail for Booty! by Jeremy Lawson —,"""69""","$9,000",4099.0
+Imp King Tome 1: Set Sail for Booty! by Jeremy Lawson —,"""69""","$9,000",4099.0
+Blights Out for Mayor by Blights Out —,"""150""","$12,500",8675.0
+Blights Out for Mayor by Blights Out —,"""150""","$12,500",8675.0
+Imp King Tome 1: Set Sail for Booty! by Jeremy Lawson —,"""69""","$9,000",4099.0
+Imp King Tome 1: Set Sail for Booty! by Jeremy Lawson —,"""69""","$9,000",4099.0
+Gator Mold - Combo Pen Blank Casting System by Tom Barron —,"""59""","$2,500",8693.0
+Gator Mold - Combo Pen Blank Casting System by Tom Barron —,"""59""","$2,500",8693.0
+Gator Mold - Combo Pen Blank Casting System by Tom Barron —,"""59""","$2,500",8693.0
+Almodovar Dystopia of Antonio Ramos &amp; the GangBangers by Antonio Ramos —,"""57""","$18,000",3618.0
+Gator Mold - Combo Pen Blank Casting System by Tom Barron —,"""59""","$2,500",8693.0
+Gator Mold - Combo Pen Blank Casting System by Tom Barron —,"""59""","$2,500",8693.0
+Almodovar Dystopia of Antonio Ramos &amp; the GangBangers by Antonio Ramos —,"""57""","$18,000",3618.0
+Almodovar Dystopia of Antonio Ramos &amp; the GangBangers by Antonio Ramos —,"""57""","$18,000",3618.0
+Almodovar Dystopia of Antonio Ramos &amp; the GangBangers by Antonio Ramos —,"""57""","$18,000",3618.0
+Almodovar Dystopia of Antonio Ramos &amp; the GangBangers by Antonio Ramos —,"""57""","$18,000",3618.0
+Dream Crasher: Volume One by Daniel Stalter —,"""99""","$4,500",4628.0
+Dream Crasher: Volume One by Daniel Stalter —,"""99""","$4,500",4628.0
+Dream Crasher: Volume One by Daniel Stalter —,"""99""","$4,500",4628.0
+Dream Crasher: Volume One by Daniel Stalter —,"""99""","$4,500",4628.0
+ORGANICALLY MAINE by Tom Hunt —,"""92""","$1,500",3048.0
+ORGANICALLY MAINE by Tom Hunt —,"""92""","$1,500",3048.0
+ORGANICALLY MAINE by Tom Hunt —,"""92""","$1,500",3048.0
+ORGANICALLY MAINE by Tom Hunt —,"""92""","$1,500",3048.0
+Blights Out for Mayor by Blights Out —,"""150""","$12,500",8675.0
+Blights Out for Mayor by Blights Out —,"""150""","$12,500",8675.0
+Blights Out for Mayor by Blights Out —,"""150""","$12,500",8675.0
+SPLATWARE | One of a kind tableware by Granby Workshop —,"""714""","$53,064",68598.0
+SPLATWARE | One of a kind tableware by Granby Workshop —,"""714""","$53,064",68598.0
+SPLATWARE | One of a kind tableware by Granby Workshop —,"""714""","$53,064",68598.0
+The Flying Martha Ornithopter by Emily Fischer —,"""609""","$30,000",42003.0
+The Flying Martha Ornithopter by Emily Fischer —,"""609""","$30,000",42003.0
+The Flying Martha Ornithopter by Emily Fischer —,"""609""","$30,000",42003.0
+The Flying Martha Ornithopter by Emily Fischer —,"""609""","$30,000",42003.0
+Board Blitz - Party game with online play! by ScrewBit Games —,"""14""","$34,640",22860.0
+7th Sea: Khitai by John Wick —,"""1296""","$50,000",103247.0
+A Really-Truly Princess: Illustrated Children’s Novel by Amanda Kastner —,"""38""","$1,000",1013.0
+Nihonshu: Japanese sake by Gautier Roussille —,"""23""","$2,353",1125.0
+"Tutu's Favorite Songs by George Kahumoku, Jr. by George Kahumoku Jr. —","""50""","$16,500",4932.0
+Almodovar Dystopia of Antonio Ramos &amp; the GangBangers by Antonio Ramos —,"""57""","$18,000",3618.0
+Embr Wave: A Thermostat For Your Body by Embr Wave —,"""2114""","$100,000",447998.01
+War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —,"""253""","$25,000",23880.0
+War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —,"""253""","$25,000",23880.0
+War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —,"""253""","$25,000",23880.0
+Embr Wave: A Thermostat For Your Body by Embr Wave —,"""2114""","$100,000",447998.01
+Embr Wave: A Thermostat For Your Body by Embr Wave —,"""2114""","$100,000",447998.01
+"Tutu's Favorite Songs by George Kahumoku, Jr. by George Kahumoku Jr. —","""50""","$16,500",4932.0
+"Tutu's Favorite Songs by George Kahumoku, Jr. by George Kahumoku Jr. —","""50""","$16,500",4932.0
+Nihonshu: Japanese sake by Gautier Roussille —,"""23""","$2,353",1125.0
+Nihonshu: Japanese sake by Gautier Roussille —,"""23""","$2,353",1125.0
+Embr Wave: A Thermostat For Your Body by Embr Wave —,"""2114""","$100,000",447998.01
+War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —,"""253""","$25,000",23880.0
+Embr Wave: A Thermostat For Your Body by Embr Wave —,"""2114""","$100,000",447998.01
+"Tutu's Favorite Songs by George Kahumoku, Jr. by George Kahumoku Jr. —","""50""","$16,500",4932.0
+War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —,"""253""","$25,000",23880.0
+Nihonshu: Japanese sake by Gautier Roussille —,"""23""","$2,353",1125.0
+"Tutu's Favorite Songs by George Kahumoku, Jr. by George Kahumoku Jr. —","""50""","$16,500",4932.0
+A Really-Truly Princess: Illustrated Children’s Novel by Amanda Kastner —,"""38""","$1,000",1013.0
+Nihonshu: Japanese sake by Gautier Roussille —,"""23""","$2,353",1125.0
+A Really-Truly Princess: Illustrated Children’s Novel by Amanda Kastner —,"""38""","$1,000",1013.0
+7th Sea: Khitai by John Wick —,"""1296""","$50,000",103247.0
+7th Sea: Khitai by John Wick —,"""1296""","$50,000",103247.0
+Board Blitz - Party game with online play! by ScrewBit Games —,"""14""","$34,640",22860.0
+Board Blitz - Party game with online play! by ScrewBit Games —,"""14""","$34,640",22860.0
+A Really-Truly Princess: Illustrated Children’s Novel by Amanda Kastner —,"""38""","$1,000",1013.0
+7th Sea: Khitai by John Wick —,"""1296""","$50,000",103247.0
+A Really-Truly Princess: Illustrated Children’s Novel by Amanda Kastner —,"""38""","$1,000",1013.0
+7th Sea: Khitai by John Wick —,"""1296""","$50,000",103247.0
+Board Blitz - Party game with online play! by ScrewBit Games —,"""14""","$34,640",22860.0
+Board Blitz - Party game with online play! by ScrewBit Games —,"""14""","$34,640",22860.0
+Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —,"""561""","$32,000",25130.0
+NOTHING FANCY: DIANA KENNEDY by Honeywater Films —,"""155""","$45,000",21620.0
+Lonesome No More - 2018 Programming at KVML by Kurt Vonnegut Memorial Library —,"""160""","$65,000",11971.0
+"Electric Paint Lamp Kit - paint, plug and play! by Bare Conductive —","""720""","$21,903",34275.0
+With Drawn Arms by Glenn Kaino Studio —,"""109""","$80,000",23883.0
+"BioLite FirePit: See Fire, Not Smoke by BioLite —","""6512""","$100,000",1597461.0
+Blights Out for Mayor by Blights Out —,"""150""","$12,500",8675.0
+FULL BLEED: The Comics &amp; Culture Quarterly by IDW Publishing —,"""820""","$50,000",75172.0
+"BioLite FirePit: See Fire, Not Smoke by BioLite —","""6512""","$100,000",1597461.0
+"BioLite FirePit: See Fire, Not Smoke by BioLite —","""6512""","$100,000",1597461.0
+FULL BLEED: The Comics &amp; Culture Quarterly by IDW Publishing —,"""820""","$50,000",75172.0
+FULL BLEED: The Comics &amp; Culture Quarterly by IDW Publishing —,"""820""","$50,000",75172.0
+"Electric Paint Lamp Kit - paint, plug and play! by Bare Conductive —","""720""","$21,903",34275.0
+With Drawn Arms by Glenn Kaino Studio —,"""109""","$80,000",23883.0
+With Drawn Arms by Glenn Kaino Studio —,"""109""","$80,000",23883.0
+"Electric Paint Lamp Kit - paint, plug and play! by Bare Conductive —","""720""","$21,903",34275.0
+"BioLite FirePit: See Fire, Not Smoke by BioLite —","""6512""","$100,000",1597461.0
+Lovebox | A simple and generous way to send love messages by Lovebox —,"""1354""","$58,837",113683.0
+FULL BLEED: The Comics &amp; Culture Quarterly by IDW Publishing —,"""820""","$50,000",75172.0
+Lonesome No More - 2018 Programming at KVML by Kurt Vonnegut Memorial Library —,"""160""","$65,000",11971.0
+Lonesome No More - 2018 Programming at KVML by Kurt Vonnegut Memorial Library —,"""160""","$65,000",11971.0
+"BioLite FirePit: See Fire, Not Smoke by BioLite —","""6512""","$100,000",1597461.0
+"Electric Paint Lamp Kit - paint, plug and play! by Bare Conductive —","""720""","$21,903",34275.0
+Lovebox | A simple and generous way to send love messages by Lovebox —,"""1354""","$58,837",113683.0
+FULL BLEED: The Comics &amp; Culture Quarterly by IDW Publishing —,"""820""","$50,000",75172.0
+Lovebox | A simple and generous way to send love messages by Lovebox —,"""1354""","$58,837",113683.0
+Lonesome No More - 2018 Programming at KVML by Kurt Vonnegut Memorial Library —,"""160""","$65,000",11971.0
+"Electric Paint Lamp Kit - paint, plug and play! by Bare Conductive —","""720""","$21,903",34275.0
+Lonesome No More - 2018 Programming at KVML by Kurt Vonnegut Memorial Library —,"""160""","$65,000",11971.0
+With Drawn Arms by Glenn Kaino Studio —,"""109""","$80,000",23883.0
+With Drawn Arms by Glenn Kaino Studio —,"""109""","$80,000",23883.0
+Lovebox | A simple and generous way to send love messages by Lovebox —,"""1354""","$58,837",113683.0
+NOTHING FANCY: DIANA KENNEDY by Honeywater Films —,"""155""","$45,000",21620.0
+Lovebox | A simple and generous way to send love messages by Lovebox —,"""1354""","$58,837",113683.0
+NOTHING FANCY: DIANA KENNEDY by Honeywater Films —,"""155""","$45,000",21620.0
+Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —,"""561""","$32,000",25130.0
+Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —,"""561""","$32,000",25130.0
+NOTHING FANCY: DIANA KENNEDY by Honeywater Films —,"""155""","$45,000",21620.0
+NOTHING FANCY: DIANA KENNEDY by Honeywater Films —,"""155""","$45,000",21620.0
+Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —,"""561""","$32,000",25130.0
+Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —,"""561""","$32,000",25130.0
+The 3rd Hawaii Sketch Comedy Festival by The Hawaii Sketch Comedy Festival —,"""149""","$12,000",11300.0
+Embr Wave: A Thermostat For Your Body by Embr Wave —,"""2114""","$100,000",447998.01
+The 3rd Hawaii Sketch Comedy Festival by The Hawaii Sketch Comedy Festival —,"""149""","$12,000",11300.0
+The 3rd Hawaii Sketch Comedy Festival by The Hawaii Sketch Comedy Festival —,"""149""","$12,000",11300.0
+Blood of Dragons: Prelude by Tyler Walpole —,"""194""","$10,000",15915.0
+Words In Sight by Gillian Hyland —,"""59""","$16,582",6444.0
+BETA: Nuevo Disco by BETA —,"""131""","$10,997",201720.0
+The 3rd Hawaii Sketch Comedy Festival by The Hawaii Sketch Comedy Festival —,"""149""","$12,000",11300.0
+The 3rd Hawaii Sketch Comedy Festival by The Hawaii Sketch Comedy Festival —,"""149""","$12,000",11300.0
+Words In Sight by Gillian Hyland —,"""59""","$16,582",6444.0
+BETA: Nuevo Disco by BETA —,"""131""","$10,997",201720.0
+BETA: Nuevo Disco by BETA —,"""131""","$10,997",201720.0
+Words In Sight by Gillian Hyland —,"""59""","$16,582",6444.0
+Blood of Dragons: Prelude by Tyler Walpole —,"""194""","$10,000",15915.0
+Blood of Dragons: Prelude by Tyler Walpole —,"""194""","$10,000",15915.0
+"THE 7th CONTINENT – What Goes Up, Must Come Down. by Serious Poulp —","""23093""","$40,000",2541346.5
+Simple Happy Kitchen: Illustrated Guide for Plant-Based Life by Miki Mottes —,"""1558""","$14,740",92209.0
+BETA: Nuevo Disco by BETA —,"""131""","$10,997",201720.0
+Blood of Dragons: Prelude by Tyler Walpole —,"""194""","$10,000",15915.0
+Words In Sight by Gillian Hyland —,"""59""","$16,582",6444.0
+Words In Sight by Gillian Hyland —,"""59""","$16,582",6444.0
+Simple Happy Kitchen: Illustrated Guide for Plant-Based Life by Miki Mottes —,"""1558""","$14,740",92209.0
+Simple Happy Kitchen: Illustrated Guide for Plant-Based Life by Miki Mottes —,"""1558""","$14,740",92209.0
+"THE 7th CONTINENT – What Goes Up, Must Come Down. by Serious Poulp —","""23093""","$40,000",2541346.5
+"THE 7th CONTINENT – What Goes Up, Must Come Down. by Serious Poulp —","""23093""","$40,000",2541346.5
+Simple Happy Kitchen: Illustrated Guide for Plant-Based Life by Miki Mottes —,"""1558""","$14,740",92209.0
+Simple Happy Kitchen: Illustrated Guide for Plant-Based Life by Miki Mottes —,"""1558""","$14,740",92209.0
+"THE 7th CONTINENT – What Goes Up, Must Come Down. by Serious Poulp —","""23093""","$40,000",2541346.5
+Blood of Dragons: Prelude by Tyler Walpole —,"""194""","$10,000",15915.0
+BETA: Nuevo Disco by BETA —,"""131""","$10,997",201720.0
+Xul / Cortometraje by Uxbal Ramírez —,"""26""","$2,749",43200.0
+PAKA - The Alpaca Wool Sweater by PAKA —,"""1504""","$20,000",200716.0
+"THE 7th CONTINENT – What Goes Up, Must Come Down. by Serious Poulp —","""23093""","$40,000",2541346.5
+"Corridor Journal | Bridgeport Connecticut by James &amp; Tyler Silvestro, The Editors —","""114""","$15,000",15890.0
+Xul / Cortometraje by Uxbal Ramírez —,"""26""","$2,749",43200.0
+Burden of Joy Costume and Set by Maureen —,"""21""","$3,100",1233.0
+Xul / Cortometraje by Uxbal Ramírez —,"""26""","$2,749",43200.0
+Burden of Joy Costume and Set by Maureen —,"""21""","$3,100",1233.0
+Xul / Cortometraje by Uxbal Ramírez —,"""26""","$2,749",43200.0
+Xul / Cortometraje by Uxbal Ramírez —,"""26""","$2,749",43200.0
+Burden of Joy Costume and Set by Maureen —,"""21""","$3,100",1233.0
+"Corridor Journal | Bridgeport Connecticut by James &amp; Tyler Silvestro, The Editors —","""114""","$15,000",15890.0
+"Corridor Journal | Bridgeport Connecticut by James &amp; Tyler Silvestro, The Editors —","""114""","$15,000",15890.0
+Burden of Joy Costume and Set by Maureen —,"""21""","$3,100",1233.0
+Burden of Joy Costume and Set by Maureen —,"""21""","$3,100",1233.0
+"Corridor Journal | Bridgeport Connecticut by James &amp; Tyler Silvestro, The Editors —","""114""","$15,000",15890.0
+"Corridor Journal | Bridgeport Connecticut by James &amp; Tyler Silvestro, The Editors —","""114""","$15,000",15890.0
+num_backers,total_raised,name,funding_target
+"""17""",344.0,Toaster Dude - Book 1 by soaporsalad —,$500
+"""85""",8272.0,We're All Going To Die - The Festival by Stefan Hunt —,"$23,482"
+"""759""",72411.0,SPLATWARE | One of a kind tableware by Granby Workshop —,"$52,966"
+"""613""",42270.0,The Flying Martha Ornithopter by Emily Fischer —,"$30,000"
+"""1477""",125407.0,Lovebox | A simple and generous way to send love messages by Lovebox —,"$58,775"
+"""17""",344.0,Toaster Dude - Book 1 by soaporsalad —,$500
+"""17""",344.0,Toaster Dude - Book 1 by soaporsalad —,$500
+"""34""",2100.0,Local Government Diversity Dashboard by Kirsten Wyatt —,"$25,000"
+"""601""",50680.0,Dead Moon: The Book by Mississippi Records —,"$50,000"
+"""34""",2100.0,Local Government Diversity Dashboard by Kirsten Wyatt —,"$25,000"
+"""34""",2100.0,Local Government Diversity Dashboard by Kirsten Wyatt —,"$25,000"
+"""407""",35273.0,Rare Craft Matcha Green Tea from Japan by Material Matcha Uji —,"$9,404"
+"""407""",35273.0,Rare Craft Matcha Green Tea from Japan by Material Matcha Uji —,"$9,404"
+"""407""",35273.0,Rare Craft Matcha Green Tea from Japan by Material Matcha Uji —,"$9,404"
+"""407""",35273.0,Rare Craft Matcha Green Tea from Japan by Material Matcha Uji —,"$9,404"
+"""407""",35273.0,Rare Craft Matcha Green Tea from Japan by Material Matcha Uji —,"$9,404"
+"""67""",6920.0,Ralph Styles Ultra – a surreal short film by Nic fforde &amp; Giulia Watson —,"$21,186"
+"""67""",6920.0,Ralph Styles Ultra – a surreal short film by Nic fforde &amp; Giulia Watson —,"$21,186"
+"""67""",6920.0,Ralph Styles Ultra – a surreal short film by Nic fforde &amp; Giulia Watson —,"$21,186"
+"""67""",6920.0,Ralph Styles Ultra – a surreal short film by Nic fforde &amp; Giulia Watson —,"$21,186"
+"""67""",6920.0,Ralph Styles Ultra – a surreal short film by Nic fforde &amp; Giulia Watson —,"$21,186"
+"""1573""",211469.0,PAKA - The Alpaca Wool Sweater by PAKA —,"$20,000"
+"""1573""",211469.0,PAKA - The Alpaca Wool Sweater by PAKA —,"$20,000"
+"""1573""",211469.0,PAKA - The Alpaca Wool Sweater by PAKA —,"$20,000"
+"""1573""",211469.0,PAKA - The Alpaca Wool Sweater by PAKA —,"$20,000"
+"""1573""",211469.0,PAKA - The Alpaca Wool Sweater by PAKA —,"$20,000"
+"""63""",9113.0,Gator Mold - Combo Pen Blank Casting System by Tom Barron —,"$2,500"
+"""63""",9113.0,Gator Mold - Combo Pen Blank Casting System by Tom Barron —,"$2,500"
+"""63""",9113.0,Gator Mold - Combo Pen Blank Casting System by Tom Barron —,"$2,500"
+"""63""",9113.0,Gator Mold - Combo Pen Blank Casting System by Tom Barron —,"$2,500"
+"""63""",9113.0,Gator Mold - Combo Pen Blank Casting System by Tom Barron —,"$2,500"
+"""34""",2100.0,Local Government Diversity Dashboard by Kirsten Wyatt —,"$25,000"
+"""34""",2100.0,Local Government Diversity Dashboard by Kirsten Wyatt —,"$25,000"
+"""601""",50680.0,Dead Moon: The Book by Mississippi Records —,"$50,000"
+"""601""",50680.0,Dead Moon: The Book by Mississippi Records —,"$50,000"
+"""601""",50680.0,Dead Moon: The Book by Mississippi Records —,"$50,000"
+"""601""",50680.0,Dead Moon: The Book by Mississippi Records —,"$50,000"
+"""53""",880.0,Neorj by Igor Berlinskiy —,"$17,632"
+"""122""",6895.0,The Final Frontier - A Broadside Portfolio by Thornwillow —,"$2,000"
+"""53""",880.0,Neorj by Igor Berlinskiy —,"$17,632"
+"""53""",880.0,Neorj by Igor Berlinskiy —,"$17,632"
+"""53""",880.0,Neorj by Igor Berlinskiy —,"$17,632"
+"""53""",880.0,Neorj by Igor Berlinskiy —,"$17,632"
+"""122""",6895.0,The Final Frontier - A Broadside Portfolio by Thornwillow —,"$2,000"
+"""122""",6895.0,The Final Frontier - A Broadside Portfolio by Thornwillow —,"$2,000"
+"""60""",3658.0,Almodovar Dystopia of Antonio Ramos &amp; the GangBangers by Antonio Ramos —,"$18,000"
+"""122""",6895.0,The Final Frontier - A Broadside Portfolio by Thornwillow —,"$2,000"
+"""60""",3658.0,Almodovar Dystopia of Antonio Ramos &amp; the GangBangers by Antonio Ramos —,"$18,000"
+"""60""",3658.0,Almodovar Dystopia of Antonio Ramos &amp; the GangBangers by Antonio Ramos —,"$18,000"
+"""122""",6895.0,The Final Frontier - A Broadside Portfolio by Thornwillow —,"$2,000"
+"""73""",3585.0,Seeing the City: Open House New York Weekend in Photos by Open House New York —,"$30,000"
+"""60""",3658.0,Almodovar Dystopia of Antonio Ramos &amp; the GangBangers by Antonio Ramos —,"$18,000"
+"""163""",14449.0,Radical Networks by Sarah Grant —,"$18,000"
+"""60""",3658.0,Almodovar Dystopia of Antonio Ramos &amp; the GangBangers by Antonio Ramos —,"$18,000"
+"""73""",3585.0,Seeing the City: Open House New York Weekend in Photos by Open House New York —,"$30,000"
+"""73""",3585.0,Seeing the City: Open House New York Weekend in Photos by Open House New York —,"$30,000"
+"""163""",14449.0,Radical Networks by Sarah Grant —,"$18,000"
+"""73""",3585.0,Seeing the City: Open House New York Weekend in Photos by Open House New York —,"$30,000"
+"""73""",3585.0,Seeing the City: Open House New York Weekend in Photos by Open House New York —,"$30,000"
+"""163""",14449.0,Radical Networks by Sarah Grant —,"$18,000"
+"""93""",7252.66,Transform Bruce Haack’s ELECTRIC LUCIFER into a rock opera by Jim Findlay —,"$10,000"
+"""163""",14449.0,Radical Networks by Sarah Grant —,"$18,000"
+"""163""",14449.0,Radical Networks by Sarah Grant —,"$18,000"
+"""93""",7252.66,Transform Bruce Haack’s ELECTRIC LUCIFER into a rock opera by Jim Findlay —,"$10,000"
+"""93""",7252.66,Transform Bruce Haack’s ELECTRIC LUCIFER into a rock opera by Jim Findlay —,"$10,000"
+"""93""",7252.66,Transform Bruce Haack’s ELECTRIC LUCIFER into a rock opera by Jim Findlay —,"$10,000"
+"""93""",7252.66,Transform Bruce Haack’s ELECTRIC LUCIFER into a rock opera by Jim Findlay —,"$10,000"
+"""60""",9536.0,IDOL LIGHT launches light centric scientific glass jewelry by Machele Nettles + Idol Light —,"$10,000"
+"""157""",10425.0,Blights Out for Mayor by Blights Out —,"$12,500"
+"""157""",10425.0,Blights Out for Mayor by Blights Out —,"$12,500"
+"""60""",9536.0,IDOL LIGHT launches light centric scientific glass jewelry by Machele Nettles + Idol Light —,"$10,000"
+"""60""",9536.0,IDOL LIGHT launches light centric scientific glass jewelry by Machele Nettles + Idol Light —,"$10,000"
+"""157""",10425.0,Blights Out for Mayor by Blights Out —,"$12,500"
+"""157""",10425.0,Blights Out for Mayor by Blights Out —,"$12,500"
+"""240""",8877.0,Is'nana the Were-Spider: Volume 2 by Greg Anderson-Elysee —,"$10,000"
+"""157""",10425.0,Blights Out for Mayor by Blights Out —,"$12,500"
+"""60""",9536.0,IDOL LIGHT launches light centric scientific glass jewelry by Machele Nettles + Idol Light —,"$10,000"
+"""157""",10425.0,Blights Out for Mayor by Blights Out —,"$12,500"
+"""60""",9536.0,IDOL LIGHT launches light centric scientific glass jewelry by Machele Nettles + Idol Light —,"$10,000"
+"""240""",8877.0,Is'nana the Were-Spider: Volume 2 by Greg Anderson-Elysee —,"$10,000"
+"""240""",8877.0,Is'nana the Were-Spider: Volume 2 by Greg Anderson-Elysee —,"$10,000"
+"""240""",8877.0,Is'nana the Were-Spider: Volume 2 by Greg Anderson-Elysee —,"$10,000"
+"""240""",8877.0,Is'nana the Were-Spider: Volume 2 by Greg Anderson-Elysee —,"$10,000"
+"""17""",344.0,Toaster Dude - Book 1 by soaporsalad —,$500
+"""17""",344.0,Toaster Dude - Book 1 by soaporsalad —,$500
+"""1484""",125956.0,Lovebox | A simple and generous way to send love messages by Lovebox —,"$58,775"
+"""1484""",125956.0,Lovebox | A simple and generous way to send love messages by Lovebox —,"$58,775"
+"""613""",42270.0,The Flying Martha Ornithopter by Emily Fischer —,"$30,000"
+"""613""",42270.0,The Flying Martha Ornithopter by Emily Fischer —,"$30,000"
+"""1484""",125956.0,Lovebox | A simple and generous way to send love messages by Lovebox —,"$58,775"
+"""1484""",125956.0,Lovebox | A simple and generous way to send love messages by Lovebox —,"$58,775"
+"""613""",42270.0,The Flying Martha Ornithopter by Emily Fischer —,"$30,000"
+"""613""",42270.0,The Flying Martha Ornithopter by Emily Fischer —,"$30,000"
+"""760""",72541.0,SPLATWARE | One of a kind tableware by Granby Workshop —,"$52,966"
+"""760""",72541.0,SPLATWARE | One of a kind tableware by Granby Workshop —,"$52,966"
+"""760""",72541.0,SPLATWARE | One of a kind tableware by Granby Workshop —,"$52,966"
+"""90""",9237.0,We're All Going To Die - The Festival by Stefan Hunt —,"$23,482"
+"""90""",9237.0,We're All Going To Die - The Festival by Stefan Hunt —,"$23,482"
+"""90""",9237.0,We're All Going To Die - The Festival by Stefan Hunt —,"$23,482"
+"""90""",9237.0,We're All Going To Die - The Festival by Stefan Hunt —,"$23,482"
+"""90""",9237.0,We're All Going To Die - The Festival by Stefan Hunt —,"$23,482"
+"""56""",6168.0,Waking La Llorona by Optika Moderna —,"$10,000"
+"""56""",6168.0,Waking La Llorona by Optika Moderna —,"$10,000"
+"""56""",6168.0,Waking La Llorona by Optika Moderna —,"$10,000"
+"""56""",6168.0,Waking La Llorona by Optika Moderna —,"$10,000"
+"""56""",6168.0,Waking La Llorona by Optika Moderna —,"$10,000"
+"""477""",127640.0,Moona - Regulating your pillow temperature to enhance sleep by Moona —,"$50,000"
+"""287""",20365.0,Encounters with the Imaginary Volume 2 by Boneshaker Press —,"$8,000"
+"""193""",23395.0,The Go For Broke Spirit Photo Book by Shane Sato —,"$25,000"
+"""132""",202065.0,BETA: Nuevo Disco by BETA —,"$10,934"
+"""8""",417.0,Eddie &amp; Frankie: An Animation Short by Eddie and Frankie: An Animated Short —,"$6,620"
+"""102""",2294.0,How Not To Kill Yourself by Microcosm Publishing —,"$5,000"
+"""477""",127640.0,Moona - Regulating your pillow temperature to enhance sleep by Moona —,"$50,000"
+"""477""",127640.0,Moona - Regulating your pillow temperature to enhance sleep by Moona —,"$50,000"
+"""102""",2294.0,How Not To Kill Yourself by Microcosm Publishing —,"$5,000"
+"""477""",127640.0,Moona - Regulating your pillow temperature to enhance sleep by Moona —,"$50,000"
+"""102""",2294.0,How Not To Kill Yourself by Microcosm Publishing —,"$5,000"
+"""8""",417.0,Eddie &amp; Frankie: An Animation Short by Eddie and Frankie: An Animated Short —,"$6,620"
+"""8""",417.0,Eddie &amp; Frankie: An Animation Short by Eddie and Frankie: An Animated Short —,"$6,620"
+"""8""",417.0,Eddie &amp; Frankie: An Animation Short by Eddie and Frankie: An Animated Short —,"$6,620"
+"""477""",127640.0,Moona - Regulating your pillow temperature to enhance sleep by Moona —,"$50,000"
+"""132""",202065.0,BETA: Nuevo Disco by BETA —,"$10,934"
+"""132""",202065.0,BETA: Nuevo Disco by BETA —,"$10,934"
+"""102""",2294.0,How Not To Kill Yourself by Microcosm Publishing —,"$5,000"
+"""8""",417.0,Eddie &amp; Frankie: An Animation Short by Eddie and Frankie: An Animated Short —,"$6,620"
+"""102""",2294.0,How Not To Kill Yourself by Microcosm Publishing —,"$5,000"
+"""132""",202065.0,BETA: Nuevo Disco by BETA —,"$10,934"
+"""132""",202065.0,BETA: Nuevo Disco by BETA —,"$10,934"
+"""8""",417.0,Eddie &amp; Frankie: An Animation Short by Eddie and Frankie: An Animated Short —,"$6,620"
+"""193""",23395.0,The Go For Broke Spirit Photo Book by Shane Sato —,"$25,000"
+"""193""",23395.0,The Go For Broke Spirit Photo Book by Shane Sato —,"$25,000"
+"""193""",23395.0,The Go For Broke Spirit Photo Book by Shane Sato —,"$25,000"
+"""193""",23395.0,The Go For Broke Spirit Photo Book by Shane Sato —,"$25,000"
+"""287""",20365.0,Encounters with the Imaginary Volume 2 by Boneshaker Press —,"$8,000"
+"""287""",20365.0,Encounters with the Imaginary Volume 2 by Boneshaker Press —,"$8,000"
+"""287""",20365.0,Encounters with the Imaginary Volume 2 by Boneshaker Press —,"$8,000"
+"""287""",20365.0,Encounters with the Imaginary Volume 2 by Boneshaker Press —,"$8,000"
+"""1""",50.0,"Hook, Lynn, &amp; Sinker: The Misadventures of a Pirate Trio by Thane Frederick Benson —","$2,000"
+"""33""",2090.0,"Sit, Eat and Chew 五味杂陈 by Mei-Yin Ng —","$3,500"
+"""409""",35441.0,Rare Craft Matcha Green Tea from Japan by Material Matcha Uji —,"$9,404"
+"""2563""",130463.0,Potato Pirates: The Tastiest Coding Card Game by Codomo —,"$10,998"
+"""3866""",330873.55,RWBY: Combat Ready by Rooster Teeth —,"$250,000"
+"""2212""",470501.01,Embr Wave: A Thermostat For Your Body by Embr Wave —,"$100,000"
+"""166""",12261.0,Lonesome No More - 2018 Programming at KVML by Kurt Vonnegut Memorial Library —,"$65,000"
+"""571""",26089.0,Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —,"$32,000"
+"""266""",24483.0,War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —,"$25,000"
+"""157""",21750.0,NOTHING FANCY: DIANA KENNEDY by Honeywater Films —,"$45,000"
+"""157""",21750.0,NOTHING FANCY: DIANA KENNEDY by Honeywater Films —,"$45,000"
+"""157""",21750.0,NOTHING FANCY: DIANA KENNEDY by Honeywater Films —,"$45,000"
+"""266""",24483.0,War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —,"$25,000"
+"""266""",24483.0,War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —,"$25,000"
+"""571""",26089.0,Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —,"$32,000"
+"""571""",26089.0,Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —,"$32,000"
+"""166""",12261.0,Lonesome No More - 2018 Programming at KVML by Kurt Vonnegut Memorial Library —,"$65,000"
+"""166""",12261.0,Lonesome No More - 2018 Programming at KVML by Kurt Vonnegut Memorial Library —,"$65,000"
+"""157""",21750.0,NOTHING FANCY: DIANA KENNEDY by Honeywater Films —,"$45,000"
+"""2212""",470501.01,Embr Wave: A Thermostat For Your Body by Embr Wave —,"$100,000"
+"""2212""",470501.01,Embr Wave: A Thermostat For Your Body by Embr Wave —,"$100,000"
+"""266""",24483.0,War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —,"$25,000"
+"""157""",21750.0,NOTHING FANCY: DIANA KENNEDY by Honeywater Films —,"$45,000"
+"""3866""",330873.55,RWBY: Combat Ready by Rooster Teeth —,"$250,000"
+"""166""",12261.0,Lonesome No More - 2018 Programming at KVML by Kurt Vonnegut Memorial Library —,"$65,000"
+"""166""",12261.0,Lonesome No More - 2018 Programming at KVML by Kurt Vonnegut Memorial Library —,"$65,000"
+"""266""",24483.0,War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —,"$25,000"
+"""2212""",470501.01,Embr Wave: A Thermostat For Your Body by Embr Wave —,"$100,000"
+"""2212""",470501.01,Embr Wave: A Thermostat For Your Body by Embr Wave —,"$100,000"
+"""571""",26089.0,Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —,"$32,000"
+"""3866""",330873.55,RWBY: Combat Ready by Rooster Teeth —,"$250,000"
+"""571""",26089.0,Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —,"$32,000"
+"""2563""",130463.0,Potato Pirates: The Tastiest Coding Card Game by Codomo —,"$10,998"
+"""2563""",130463.0,Potato Pirates: The Tastiest Coding Card Game by Codomo —,"$10,998"
+"""33""",2090.0,"Sit, Eat and Chew 五味杂陈 by Mei-Yin Ng —","$3,500"
+"""33""",2090.0,"Sit, Eat and Chew 五味杂陈 by Mei-Yin Ng —","$3,500"
+"""3866""",330873.55,RWBY: Combat Ready by Rooster Teeth —,"$250,000"
+"""1""",50.0,"Hook, Lynn, &amp; Sinker: The Misadventures of a Pirate Trio by Thane Frederick Benson —","$2,000"
+"""3866""",330873.55,RWBY: Combat Ready by Rooster Teeth —,"$250,000"
+"""2563""",130463.0,Potato Pirates: The Tastiest Coding Card Game by Codomo —,"$10,998"
+"""1""",50.0,"Hook, Lynn, &amp; Sinker: The Misadventures of a Pirate Trio by Thane Frederick Benson —","$2,000"
+"""2563""",130463.0,Potato Pirates: The Tastiest Coding Card Game by Codomo —,"$10,998"
+"""731""",34761.0,"Electric Paint Lamp Kit - paint, plug and play! by Bare Conductive —","$21,863"
+"""33""",2090.0,"Sit, Eat and Chew 五味杂陈 by Mei-Yin Ng —","$3,500"
+"""33""",2090.0,"Sit, Eat and Chew 五味杂陈 by Mei-Yin Ng —","$3,500"
+"""111""",33953.0,With Drawn Arms by Glenn Kaino Studio —,"$80,000"
+"""6602""",1619872.0,"BioLite FirePit: See Fire, Not Smoke by BioLite —","$100,000"
+"""157""",10425.0,Blights Out for Mayor by Blights Out —,"$12,500"
+"""1""",50.0,"Hook, Lynn, &amp; Sinker: The Misadventures of a Pirate Trio by Thane Frederick Benson —","$2,000"
+"""1""",50.0,"Hook, Lynn, &amp; Sinker: The Misadventures of a Pirate Trio by Thane Frederick Benson —","$2,000"
+"""731""",34761.0,"Electric Paint Lamp Kit - paint, plug and play! by Bare Conductive —","$21,863"
+"""731""",34761.0,"Electric Paint Lamp Kit - paint, plug and play! by Bare Conductive —","$21,863"
+"""111""",33953.0,With Drawn Arms by Glenn Kaino Studio —,"$80,000"
+"""111""",33953.0,With Drawn Arms by Glenn Kaino Studio —,"$80,000"
+"""6602""",1619872.0,"BioLite FirePit: See Fire, Not Smoke by BioLite —","$100,000"
+"""6602""",1619872.0,"BioLite FirePit: See Fire, Not Smoke by BioLite —","$100,000"
+"""731""",34761.0,"Electric Paint Lamp Kit - paint, plug and play! by Bare Conductive —","$21,863"
+"""111""",33953.0,With Drawn Arms by Glenn Kaino Studio —,"$80,000"
+"""6602""",1619872.0,"BioLite FirePit: See Fire, Not Smoke by BioLite —","$100,000"
+"""6602""",1619872.0,"BioLite FirePit: See Fire, Not Smoke by BioLite —","$100,000"
+"""731""",34761.0,"Electric Paint Lamp Kit - paint, plug and play! by Bare Conductive —","$21,863"
+"""111""",33953.0,With Drawn Arms by Glenn Kaino Studio —,"$80,000"
+"""34""",2100.0,Local Government Diversity Dashboard by Kirsten Wyatt —,"$25,000"
+"""3866""",330873.55,RWBY: Combat Ready by Rooster Teeth —,"$250,000"
+"""129""",24718.0,Ignite: A Burning Man Film by Ryan Moore —,"$20,000"
+"""174""",10595.0,Nomster Chef: Recipes that Help Kids Learn to Cook by Nomster Chef —,"$10,000"
+"""66""",6594.0,WINNATS ROLL TOP BACKPACK – THE LEVEL COLLECTIVE by THE LEVEL COLLECTIVE —,"$3,972"
+"""21""",1233.0,Burden of Joy Costume and Set by Maureen —,"$3,100"
+"""140""",35290.0,WOODSPIRIT Handmade Swiss Skis by Bessard —,"$25,625"
+"""129""",24718.0,Ignite: A Burning Man Film by Ryan Moore —,"$20,000"
+"""174""",10595.0,Nomster Chef: Recipes that Help Kids Learn to Cook by Nomster Chef —,"$10,000"
+"""129""",24718.0,Ignite: A Burning Man Film by Ryan Moore —,"$20,000"
+"""174""",10595.0,Nomster Chef: Recipes that Help Kids Learn to Cook by Nomster Chef —,"$10,000"
+"""129""",24718.0,Ignite: A Burning Man Film by Ryan Moore —,"$20,000"
+"""129""",24718.0,Ignite: A Burning Man Film by Ryan Moore —,"$20,000"
+"""174""",10595.0,Nomster Chef: Recipes that Help Kids Learn to Cook by Nomster Chef —,"$10,000"
+"""174""",10595.0,Nomster Chef: Recipes that Help Kids Learn to Cook by Nomster Chef —,"$10,000"
+"""140""",35290.0,WOODSPIRIT Handmade Swiss Skis by Bessard —,"$25,625"
+"""140""",35290.0,WOODSPIRIT Handmade Swiss Skis by Bessard —,"$25,625"
+"""21""",1233.0,Burden of Joy Costume and Set by Maureen —,"$3,100"
+"""21""",1233.0,Burden of Joy Costume and Set by Maureen —,"$3,100"
+"""66""",6594.0,WINNATS ROLL TOP BACKPACK – THE LEVEL COLLECTIVE by THE LEVEL COLLECTIVE —,"$3,972"
+"""66""",6594.0,WINNATS ROLL TOP BACKPACK – THE LEVEL COLLECTIVE by THE LEVEL COLLECTIVE —,"$3,972"
+"""140""",35290.0,WOODSPIRIT Handmade Swiss Skis by Bessard —,"$25,625"
+"""21""",1233.0,Burden of Joy Costume and Set by Maureen —,"$3,100"
+"""140""",35290.0,WOODSPIRIT Handmade Swiss Skis by Bessard —,"$25,625"
+"""21""",1233.0,Burden of Joy Costume and Set by Maureen —,"$3,100"
+"""66""",6594.0,WINNATS ROLL TOP BACKPACK – THE LEVEL COLLECTIVE by THE LEVEL COLLECTIVE —,"$3,972"
+"""66""",6594.0,WINNATS ROLL TOP BACKPACK – THE LEVEL COLLECTIVE by THE LEVEL COLLECTIVE —,"$3,972"
+funding_target,name,total_raised,num_backers
+"$1,000",Dyepot Weekly: A Series of Yarn Dyeing Videos by Rebecca Brown —,2617.0,"""68"""
+"$4,000",Floating Head - Graphic Science Fiction Quarterly by Mike Mccubbins and Matt Bryan —,1935.0,"""38"""
+"$23,482",We're All Going To Die - The Festival by Stefan Hunt —,10485.0,"""109"""
+"$52,966",SPLATWARE | One of a kind tableware by Granby Workshop —,73831.0,"""777"""
+"$2,000",The Final Frontier - A Broadside Portfolio by Thornwillow —,7074.0,"""123"""
+"$25,000",Local Government Diversity Dashboard by Kirsten Wyatt —,2150.0,"""36"""
+"$17,632",Neorj by Igor Berlinskiy —,894.0,"""55"""
+"$9,404",Rare Craft Matcha Green Tea from Japan by Material Matcha Uji —,37249.0,"""430"""
+"$21,186",Ralph Styles Ultra – a surreal short film by Nic fforde &amp; Giulia Watson —,7907.0,"""76"""
+"$20,000",PAKA - The Alpaca Wool Sweater by PAKA —,215983.0,"""1604"""
+"$10,000",IDOL LIGHT launches light centric scientific glass jewelry by Machele Nettles + Idol Light —,9886.0,"""63"""
+"$50,000",Dead Moon: The Book by Mississippi Records —,51585.0,"""611"""
+"$30,000",Seeing the City: Open House New York Weekend in Photos by Open House New York —,3585.0,"""73"""
+"$10,000",Transform Bruce Haack’s ELECTRIC LUCIFER into a rock opera by Jim Findlay —,7795.66,"""99"""
+"$18,000",Radical Networks by Sarah Grant —,16629.0,"""176"""
+"$10,000",Is'nana the Were-Spider: Volume 2 by Greg Anderson-Elysee —,9160.0,"""245"""
+"$2,500",Gator Mold - Combo Pen Blank Casting System by Tom Barron —,9113.0,"""63"""
+"$12,500",Blights Out for Mayor by Blights Out —,10599.0,"""162"""
+"$18,000",Almodovar Dystopia of Antonio Ramos &amp; the GangBangers by Antonio Ramos —,3691.0,"""62"""
+"$1,000",A Really-Truly Princess: Illustrated Children’s Novel by Amanda Kastner —,1170.0,"""45"""
+"$5,000",How Not To Kill Yourself by Microcosm Publishing —,2478.0,"""109"""
+"$50,000",Relic Hunters Legend - Online Cooperative Shooter/Looter/RPG by David Logan —,3849.79,"""66"""
+"$52,966",London2London: Via the World - by Sarah Outen &amp; Jen Randall by Sarah Outen —,6690.0,"""111"""
+"$50,000","Transformers G1 Unofficial Photographic Archive Vintage Toys by Ocular Echo, LLC —",54057.0,"""415"""
+"$21,461","MESAY-20 Languages Smart Voice Translator - You say, I know! by Seven —",80850.0,"""365"""
+"$250,000",RWBY: Combat Ready by Rooster Teeth —,336037.55,"""3928"""
+"$100,000",Embr Wave: A Thermostat For Your Body by Embr Wave —,474508.01,"""2228"""
+"$25,000",War is Only Half The Story - 10th Anniversary Photo Book by Sara Terry —,27023.0,"""293"""
+"$65,000",Lonesome No More - 2018 Programming at KVML by Kurt Vonnegut Memorial Library —,12261.0,"""166"""
+"$32,000",Withco Cocktails : Fresh Ingredient Drink Mixers. by WithCo —,26335.0,"""578"""
+"$45,000",NOTHING FANCY: DIANA KENNEDY by Honeywater Films —,21750.0,"""157"""
+"$80,000",With Drawn Arms by Glenn Kaino Studio —,33953.0,"""111"""
+"$21,863","Electric Paint Lamp Kit - paint, plug and play! by Bare Conductive —",34900.0,"""733"""
+"$100,000","BioLite FirePit: See Fire, Not Smoke by BioLite —",1626839.0,"""6629"""
+"$30,000",Bring Ryan Landry's 'Greece!' to New York City! by The Gold Dust Orphans —,13744.0,"""78"""
+"$15,000",ROBOPAL: Build STEM Skills. Build Robots. Have Fun by Robopal —,6565.1,"""37"""
+"$21,000",Astro Alphabet by Lunar Saloon —,5834.11,"""181"""
+"$30,000",Kate Davis - Recording an album! by Kate Davis —,12095.0,"""294"""
+"$13,241",HOTSHOE's 200th ISSUE by HOTSHOE —,4361.0,"""35"""
+"$5,365",My Indian Kitchen by Ashia Ismail-Singer - My Indian Kitchen —,3625.0,"""72"""
+"$16,022","DEEP SIX Sci-fi Webseries with Orphan Black, Battlestar cast by Deep Six Crew —",29080.0,"""522"""
+"$11,755",World's first 3D printed sunglasses from plastic waste by Sebastiaan —,22137.0,"""261"""
+"$25,000",Nomad Notebooks: A place where creativity thrives! by LaMar Smith —,18084.0,"""437"""
+"$30,000",The Flying Martha Ornithopter by Emily Fischer —,42387.0,"""615"""
