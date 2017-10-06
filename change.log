@@ -6,3 +6,9 @@ Created GitHub repository.  Migrated some files from local storage to repository
 
 Pushed an update that includes functions that scrape desired data using xpaths
 and iterates through all internal links in a domain.
+
+10/6/2017
+
+Many pushed updates including changes to parse_xpaths() and subclasses from scrapy to facilitate output and filtering results. 
+Able to scrape data from from html body.
+Handling of javascript needed now.
