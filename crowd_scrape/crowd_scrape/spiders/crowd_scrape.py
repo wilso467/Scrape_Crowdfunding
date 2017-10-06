@@ -1,38 +1,42 @@
 # A python code to scrape data from crowdfund websites.
 # @Evan M. Wilson 2017
 
-# Use with 'scrapy crawl kicker' in top directory
+# Use with 'scrapy crawl test -o data.csv' in top directory to send data to csv
 
 import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.exceptions import DropItem
+import re
 
-# KickstartSpider is a subclass of spider and must implement these
 # functions: start_requests() and parse()
 
+# Scrapy Item subclass with fields for Kickstarter data
 class Project_Item(scrapy.Item):
     name = scrapy.Field()
     total_raised = scrapy.Field()
     funding_target = scrapy.Field()
     num_backers = scrapy.Field()
 
+# Spider subclasses implement start_requests() and parse()
 class TestSpider(scrapy.spiders.CrawlSpider):
     name = 'test'
     allowed_domains = ['kickstarter.com']
     start_urls = ['https://www.kickstarter.com/']#['http://www.kickstarter.com/discover']
 
-    #allowed_domains = ['stackoverflow.com']
-    #start_urls = ['http://www.stackoverflow.com/']
-
     rules = (
+        # Rules for parsing links. Sends links to parse_xpaths. Works recursively.
+        scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('discover', 'projects'),
+                                                                deny=(
+                                                                'blog', 'profile', 'comments', 'posts', 'community',
+                                                                'faqs', 'updates', 'login')
+                                                                ), callback='parse_xpaths', follow=True),
+
         #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor()),
         #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('projects')
         #                                                        ), callback='parse_xpaths')
 
         #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow='discover')),
-        scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('discover','projects'),
-                                                                deny=('blog', 'profile', 'comments', 'posts', 'community','faqs', 'updates', 'login')
-                                                                ), callback='parse_xpaths', follow=True),
+
 
         #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(deny=('profiles','comments'))),
         #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('projects',)), callback='parse'),
@@ -41,58 +45,81 @@ class TestSpider(scrapy.spiders.CrawlSpider):
         #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('questions')), callback='parse')
     )
 
-    # rules = (
-    #     scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(deny=('questions'))),
-    #     scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('blog')),callback='parse'),
-    # )
-
+    # Main parsing function.
     def parse_xpaths(self, response):
 
-        #print('The url is','DOOOOT DOOOT ', '', response.url)
-        #self.logger.info('Hi, this is an web page! DOOT DOOOT %s', response.url)
+        # Is this a 'projects' URL ?
+        regexp = re.compile(r'projects')
+        response.url
 
-        try:
-            #Use this one
-            name = response.xpath('//html/head/title').re(r'(\n.*\n)')[0].strip()
+        if regexp.search(response.url):
+            item = Project_Item()
+            try:
+                # Use this one
+                name = response.xpath('//html/head/title').re(r'(\n.*\n)')[0].strip()
 
-            # name = response.xpath(
-            #                  '//*[contains(concat('
-            #                  ' " ", @class, " " ), concat( " ", "medium", " " )) and contains('
-            #                  'concat( " ", @class, " " ), concat( " ", "mb3", " " ))]').re(r'(\n.*\n)')[0].strip()
-            #
-            # pledge_numbers = response.xpath(
-            #     '//*[contains(concat( " ", @class, " " ), concat( " ", "js-usd_pledged", " " ))]/text()').re(
-            #     r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0].strip()
-            #Use this one
-            pledge_numbers=response.xpath('//*[@id="pledged"]').re(r'(?<=data-pledged=)"(.*[0-9])')[0]
-            #
-            #Use this one
-            goal = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]').re(
-                r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0].strip()
+                # name = response.xpath(
+                #                  '//*[contains(concat('
+                #                  ' " ", @class, " " ), concat( " ", "medium", " " )) and contains('
+                #                  'concat( " ", @class, " " ), concat( " ", "mb3", " " ))]').re(r'(\n.*\n)')[0].strip()
+                #
+                # pledge_numbers = response.xpath(
+                #     '//*[contains(concat( " ", @class, " " ), concat( " ", "js-usd_pledged", " " ))]/text()').re(
+                #     r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0].strip()
+                item['name'] = name
 
-            #goal = response.xpath('//*[@id="content-wrap"]/section/div/div[3]/div/div/div[3]/div[1]/span[3]/span[1]').re(r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0]
-            #
-            #Use this one
-            backers = response.xpath('//*[(@id = "backers_count")]').re(r'"[-0-9.,]*"')[0].strip()
+            except IndexError:
+                print('Caught IndexError parsing name')
+                # print('This url through an exception on parse: ', response.url)
+                # pass
+
+            try:
+                # Use this one
+                pledge_numbers = response.xpath('//*[@id="pledged"]').re(r'(?<=data-pledged=)"(.*[0-9])')[0]
+                #
+                item['total_raised'] = pledge_numbers
+
+            except IndexError:
+                print('Caught IndexError parsing pledged money')
+                # print('This url through an exception on parse: ', response.url)
+                # pass
+                item['total_raised'] = 'NOT FOUND'
+
+            try:
+                # Use this one
+                goal = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]').re(
+                    r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0].strip()
+                # goal = response.xpath('//*[@id="content-wrap"]/section/div/div[3]/div/div/div[3]/div[1]/span[3]/span[1]').re(r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0]
+                #
+                item['funding_target'] = goal
+
+            except IndexError:
+                print('Caught IndexError parsing goal')
+                # print('This url through an exception on parse: ', response.url)
+                # pass
+                item['funding_target'] = 'NOT FOUND'
+
+            try:
+                # Use this one
+                backers = response.xpath('//*[(@id = "backers_count")]').re(r'"[-0-9.,]*"')[0].strip()
+                item['num_backers'] = backers
+            except IndexError:
+                print('Caught IndexError on number of backers')
+                # print('This url through an exception on parse: ', response.url)
+                # pass
+                item['num_backers'] = 'NOT FOUND'
+
             #
             # print('\n', 'The name of the project is: ', name)
             # print('\n', 'Total raised: ', pledge_numbers)
             # print('\n', 'Funding target: ', goal)
             # print('\n', 'Number of backers: ', backers)
             #
-            item = Project_Item()
-            item['name']=name
-            item['total_raised']=pledge_numbers
-            item['funding_target']=goal
-            item['num_backers']=backers
+
             return item
 
-
-        except IndexError:
-            # print('Caught IndexError parsing name')
-            print('This url through an exception on parse: ', response.url)
-            #pass
-
+# Item Pipeline that
+# TODO Refine this pipeline to filter out extraneous results
 class DuplicatesPipeline(object):
     def __init__(self):
             self.ids_seen = set()
@@ -106,14 +133,7 @@ class DuplicatesPipeline(object):
                 self.ids_seen.add(item['name'])
                 return item
 
-
-
-
-
-
-
-
-
+# Land of discarded code.  Kept for reference.
 
 # class KickstartSpider(scrapy.Spider):
 #     name = "kicker"
