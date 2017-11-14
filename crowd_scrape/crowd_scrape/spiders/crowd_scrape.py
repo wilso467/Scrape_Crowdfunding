@@ -7,6 +7,9 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.exceptions import DropItem
 import re
+import web_driver_setup
+import random
+import time
 
 # functions: start_requests() and parse()
 
@@ -20,30 +23,84 @@ class Project_Item(scrapy.Item):
 # Spider subclasses implement start_requests() and parse()
 class TestSpider(scrapy.spiders.CrawlSpider):
     name = 'test'
-    allowed_domains = ['kickstarter.com']
-    start_urls = ['https://www.kickstarter.com/']#['http://www.kickstarter.com/discover']
 
-    rules = (
-        # Rules for parsing links. Sends links to parse_xpaths. Works recursively.
-        scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('discover', 'projects'),
-                                                                deny=(
-                                                                'blog', 'profile', 'comments', 'posts', 'community',
-                                                                'faqs', 'updates', 'login')
-                                                                ), callback='parse_xpaths', follow=True),
+    # Get Chrome web driver from helper function
+    driver = web_driver_setup.web_driver_setup.driver
 
-        #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor()),
-        #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('projects')
-        #                                                        ), callback='parse_xpaths')
+    # Kickstarter API sort type
+    url_sort_types = ["newest", "end_date", "magic", "popularity"]
 
-        #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow='discover')),
+    # Magic sort type randomizes based on some seed value
+    seed = str(random.randint(0, 999))
+
+    project_urls = []
+    for url_sort_type in url_sort_types:
+
+        base_url = ["https://www.kickstarter.com/discover/advanced?sort=", url_sort_type, "&seed=", seed]
+
+        # Max page index is 200
+        for page in range(1, 200):
+
+            page_number = ["&page=", str(page)]
+            full_url = ""
+            url = ""
+
+            full_url = base_url+page_number
+            page_url = url.join(full_url)
+
+            driver.get(page_url)
+            if url_sort_type == "newest" and page == 1:
+                proj_count = driver.find_element_by_xpath('//*[contains(@class,"count green")]')
+                proj_count = proj_count.text
+                proj_count = proj_count.encode('utf-8')
+                proj_count = int(proj_count.replace(',', ""))
+                print("Total number of live projects is ", proj_count)
+
+            elements = driver.find_elements_by_xpath('//div[@class="js-track-project-card"]')
+
+            for element in elements:
+
+                link = element.find_element_by_tag_name("a")
+                url = link.get_attribute("href")
+
+                #print url
+
+                if url not in project_urls:
+                    project_urls.append(url)
+
+    percent_live_found = float(len(project_urls))/float(proj_count)*100.00
+    print(len(project_urls), " project urls found.")
+    print("Test spider found ", percent_live_found, "% of live Kickstarter projects")
 
 
-        #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(deny=('profiles','comments'))),
-        #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('projects',)), callback='parse'),
-        # scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(), callback='parse'),
 
-        #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('questions')), callback='parse')
-    )
+
+
+
+    # allowed_domains = ['kickstarter.com']
+    # start_urls = ['https://www.kickstarter.com/']#['http://www.kickstarter.com/discover']
+    #
+    # rules = (
+    #     # Rules for parsing links. Sends links to parse_xpaths. Works recursively.
+    #     scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('discover', 'projects'),
+    #                                                             deny=(
+    #                                                             'blog', 'profile', 'comments', 'posts', 'community',
+    #                                                             'faqs', 'updates', 'login')
+    #                                                             ), callback='parse_xpaths', follow=True),
+    #
+    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor()),
+    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('projects')
+    #     #                                                        ), callback='parse_xpaths')
+    #
+    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow='discover')),
+    #
+    #
+    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(deny=('profiles','comments'))),
+    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('projects',)), callback='parse'),
+    #     # scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(), callback='parse'),
+    #
+    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('questions')), callback='parse')
+
 
     # Main parsing function.
     def parse_xpaths(self, response):
