@@ -19,59 +19,87 @@ class Project_Item(scrapy.Item):
     total_raised = scrapy.Field()
     funding_target = scrapy.Field()
     num_backers = scrapy.Field()
+    url = scrapy.Field()
+    pledge_amounts = scrapy.Field()
 
 # Spider subclasses implement start_requests() and parse()
 class TestSpider(scrapy.spiders.CrawlSpider):
     name = 'test'
 
-    # Get Chrome web driver from helper function
-    driver = web_driver_setup.web_driver_setup.driver
+    def start_requests(self):
+        # Get Chrome web driver from helper function
+        driver = web_driver_setup.web_driver_setup.driver
 
-    # Kickstarter API sort type
-    url_sort_types = ["newest", "end_date", "magic", "popularity"]
+        driver.get("https://www.kickstarter.com/")
+        live_projects = driver.find_element_by_xpath('//*[(text()="Live projects")]')
+        proj_count = live_projects.find_elements_by_xpath('//p[@class="bold"]')
+        proj_count = proj_count[3].text
+        proj_count = proj_count.encode('utf-8')
+        proj_count = int(proj_count.replace(',', ""))
+        print("Total number of live projects is ", proj_count)
 
-    # Magic sort type randomizes based on some seed value
-    seed = str(random.randint(0, 999))
+        # Kickstarter API sort type
+        url_sort_types = ["newest", "end_date", "magic", "popularity"]
+        #url_sort_types = ["newest"]
 
-    project_urls = []
-    for url_sort_type in url_sort_types:
+        project_urls = []
 
-        base_url = ["https://www.kickstarter.com/discover/advanced?sort=", url_sort_type, "&seed=", seed]
+        #Loop acquires list of urls to crawl
+        for url_sort_type in url_sort_types:
 
-        # Max page index is 200
-        for page in range(1, 200):
+            # Magic sort type randomizes based on some seed value
+            # For magic, loop over a few random seeds to try to find all projects
+            if url_sort_type == "magic":
+                seeds = [str(random.randint(0, 999)), str(random.randint(0, 999)), str(random.randint(0, 9999)),
+                         str(random.randint(0, 99999)), str(random.randint(0, 9999999)),str(random.randint(0, 9999999)),
+                         str(random.randint(0, 999999))]
+            else:
+                seeds = [str(random.randint(0, 999))]
 
-            page_number = ["&page=", str(page)]
-            full_url = ""
-            url = ""
+            for seed in seeds:
 
-            full_url = base_url+page_number
-            page_url = url.join(full_url)
+                base_url = ["https://www.kickstarter.com/discover/advanced?sort=", url_sort_type, "&seed=", seed]
 
-            driver.get(page_url)
-            if url_sort_type == "newest" and page == 1:
-                proj_count = driver.find_element_by_xpath('//*[contains(@class,"count green")]')
-                proj_count = proj_count.text
-                proj_count = proj_count.encode('utf-8')
-                proj_count = int(proj_count.replace(',', ""))
-                print("Total number of live projects is ", proj_count)
+                # Max page index is 200, loop over all of them
+                for page in range(1, 200):
 
-            elements = driver.find_elements_by_xpath('//div[@class="js-track-project-card"]')
+                    page_number = ["&page=", str(page)]
+                    full_url = ""
+                    url = ""
 
-            for element in elements:
+                    full_url = base_url+page_number
+                    page_url = url.join(full_url)
 
-                link = element.find_element_by_tag_name("a")
-                url = link.get_attribute("href")
+                    # Get the page after constructing url
+                    driver.get(page_url)
 
-                #print url
+                    # Get the total number of live projects
+                    # if url_sort_type == "newest" and page == 1:
+                    #     proj_count = driver.find_element_by_xpath('//*[contains(@class,"count green")]')
+                    #     proj_count = proj_count.text
+                    #     proj_count = proj_count.encode('utf-8')
+                    #     proj_count = int(proj_count.replace(',', ""))
+                    #     print("Total number of live projects is ", proj_count)
 
-                if url not in project_urls:
-                    project_urls.append(url)
+                    # Gets the project urls
+                    elements = driver.find_elements_by_xpath('//div[@class="js-track-project-card"]')
+                    for element in elements:
 
-    percent_live_found = float(len(project_urls))/float(proj_count)*100.00
-    print(len(project_urls), " project urls found.")
-    print("Test spider found ", percent_live_found, "% of live Kickstarter projects")
+                        link = element.find_element_by_tag_name("a")
+                        url = link.get_attribute("href")
 
+                        #print url
+
+                        if url not in project_urls:
+                            project_urls.append(url)
+
+        percent_live_found = float(len(project_urls))/float(proj_count)*100.00
+        print(len(project_urls), " project urls found.")
+        print("Test spider found ", percent_live_found, "% of live Kickstarter projects")
+
+        for url in project_urls:
+
+            yield scrapy.Request(url, callback=self.parse_xpaths)
 
 
 
@@ -111,6 +139,7 @@ class TestSpider(scrapy.spiders.CrawlSpider):
 
         if regexp.search(response.url):
             item = Project_Item()
+            item['url'] = response.url
             try:
                 # Use this one
                 name = response.xpath('//html/head/title').re(r'(\n.*\n)')[0].strip()
@@ -165,6 +194,19 @@ class TestSpider(scrapy.spiders.CrawlSpider):
                 # print('This url through an exception on parse: ', response.url)
                 # pass
                 item['num_backers'] = 'NOT FOUND'
+
+            #This just got switched to JS -- need to call webdriver here too
+            # try:
+            #     pledge_amounts = response.xpaths('//*[contains(concat( " ", @class, " " ), concat( " ", "pledge__amount", " "'
+            #                                      ' ))]//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]')
+            #
+            #     print(pledge_amounts)
+            #
+            # except:
+            #
+            #     print('Caught IndexError on Pledge amounts')
+            #
+            #     item['pledge_amounts'] = 'NOT FOUND'
 
             #
             # print('\n', 'The name of the project is: ', name)
