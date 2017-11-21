@@ -20,7 +20,16 @@ class Project_Item(scrapy.Item):
     funding_target = scrapy.Field()
     num_backers = scrapy.Field()
     url = scrapy.Field()
-    pledge_amounts = scrapy.Field()
+    number_of_reward_levels = scrapy.Field()
+    reward_levels = scrapy.Field()
+    start_date = scrapy.Field()
+    end_date = scrapy.Field()
+    category = scrapy.Field()
+    location = scrapy.Field()
+
+    description = scrapy.Field()
+    comments = scrapy.Field()
+    faqs = scrapy.Field()
 
 # Spider subclasses implement start_requests() and parse()
 class TestSpider(scrapy.spiders.CrawlSpider):
@@ -39,8 +48,8 @@ class TestSpider(scrapy.spiders.CrawlSpider):
         print("Total number of live projects is ", proj_count)
 
         # Kickstarter API sort type
-        url_sort_types = ["newest", "end_date", "magic", "popularity"]
-        #url_sort_types = ["newest"]
+        #url_sort_types = ["newest", "end_date", "magic", "popularity"]
+        url_sort_types = ["magic"]
 
         project_urls = []
 
@@ -50,9 +59,9 @@ class TestSpider(scrapy.spiders.CrawlSpider):
             # Magic sort type randomizes based on some seed value
             # For magic, loop over a few random seeds to try to find all projects
             if url_sort_type == "magic":
-                seeds = [str(random.randint(0, 999)), str(random.randint(0, 999)), str(random.randint(0, 9999)),
-                         str(random.randint(0, 99999)), str(random.randint(0, 9999999)),str(random.randint(0, 9999999)),
-                         str(random.randint(0, 999999))]
+                seeds = [str(random.randint(0, 999))]#, str(random.randint(0, 999)), str(random.randint(0, 9999)),
+                         #str(random.randint(0, 99999)), str(random.randint(0, 9999999)),str(random.randint(0, 9999999)),
+                         #str(random.randint(0, 999999))]
             else:
                 seeds = [str(random.randint(0, 999))]
 
@@ -61,7 +70,7 @@ class TestSpider(scrapy.spiders.CrawlSpider):
                 base_url = ["https://www.kickstarter.com/discover/advanced?sort=", url_sort_type, "&seed=", seed]
 
                 # Max page index is 200, loop over all of them
-                for page in range(1, 200):
+                for page in range(1, 2): #200):
 
                     page_number = ["&page=", str(page)]
                     full_url = ""
@@ -101,6 +110,8 @@ class TestSpider(scrapy.spiders.CrawlSpider):
 
             yield scrapy.Request(url, callback=self.parse_xpaths)
 
+        #driver.close()
+
 
 
 
@@ -136,6 +147,9 @@ class TestSpider(scrapy.spiders.CrawlSpider):
         # Is this a 'projects' URL ?
         regexp = re.compile(r'projects')
         response.url
+
+        driver = web_driver_setup.web_driver_setup.driver
+        driver.get(response.url)
 
         if regexp.search(response.url):
             item = Project_Item()
@@ -195,27 +209,71 @@ class TestSpider(scrapy.spiders.CrawlSpider):
                 # pass
                 item['num_backers'] = 'NOT FOUND'
 
-            #This just got switched to JS -- need to call webdriver here too
-            # try:
-            #     pledge_amounts = response.xpaths('//*[contains(concat( " ", @class, " " ), concat( " ", "pledge__amount", " "'
-            #                                      ' ))]//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]')
-            #
-            #     print(pledge_amounts)
-            #
-            # except:
-            #
-            #     print('Caught IndexError on Pledge amounts')
-            #
-            #     item['pledge_amounts'] = 'NOT FOUND'
+            #This is ugly but ok...
+            location = response.xpath('//*[(@class = "nowrap navy-700 flex items-center medium type-12")]').re(r'(\n.*\n)')[1].strip() #[2].strip()
+            #print("The location is ", location)
+            item['location'] = location
 
-            #
-            # print('\n', 'The name of the project is: ', name)
-            # print('\n', 'Total raised: ', pledge_numbers)
-            # print('\n', 'Funding target: ', goal)
-            # print('\n', 'Number of backers: ', backers)
-            #
+            category = response.xpath('//*[(@class = "nowrap navy-700 flex items-center medium mr3 type-12")]').re(r'(\n.*\n)')[1].strip()
+            print("The category is ", category)
+            item['category'] = category
+
+            pledge_panels = driver.find_elements_by_xpath(
+                '//li[@class="hover-group js-reward-available pledge--available pledge-selectable-sidebar"]')
+            pledge_list = []
+
+            for pledge_panel in pledge_panels:
+                #pledge_amounts = pledge_panel.find_element_by_xpath('//span[@class="money"]')
+                pledge_amounts = pledge_panel.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "pledge__amount", " " ))]//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]')
+
+                for pledge_amount in pledge_amounts:
+                    #print("Pledge amounts are", pledge_amount.text, "for url", response.url)
+                    pledge_list.append(pledge_amount.text)
+
+            end_date = driver.find_element_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "type-12", " " ))]//*[contains(concat( " ", @class, " " ), concat( " ", "js-adjust-time", " " ))]')
+            item['end_date'] = end_date.text
+
+            reward_levels = "{"
+            for pledges in pledge_list:
+                reward_levels = reward_levels+str(pledges)+";"
+
+            reward_levels = reward_levels + "}"
+
+            item['reward_levels'] = reward_levels
+            item['number_of_reward_levels'] = len(pledge_list)
+
+            description_text = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "formatted-lists", " " ))]//p')
+            description = "{"
+            for descriptions in description_text:
+                description = description+descriptions.text
+
+            description = description+"}"
+            item['description'] = description
+
+            driver.get((response.url)+"/comments")
+
+            comments = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "ml3", " " ))]//p')
+
+            comment_list = "{"
+            for comment in comments:
+                comment_list = comment_list+comment.text+";"
+            comment_list = comment_list+"}"
+
+            item['comments'] = comment_list
+
+            driver.get((response.url)+"/faqs")
+
+            faqs = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "ml3", " " ))]//p')
+
+            faq_list = "{"
+            for faq in faqs:
+                faq_list = faq_list+faq.text+";"
+            faq_list = faq_list+"}"
+
+            item['faqs'] = faq_list
 
             return item
+
 
 # Item Pipeline that
 # TODO Refine this pipeline to filter out extraneous results
