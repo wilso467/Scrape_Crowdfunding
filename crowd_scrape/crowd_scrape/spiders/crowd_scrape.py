@@ -8,6 +8,7 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.exceptions import DropItem
 import re
 import web_driver_setup
+import logger
 import random
 import time
 
@@ -26,10 +27,11 @@ class Project_Item(scrapy.Item):
     end_date = scrapy.Field()
     category = scrapy.Field()
     location = scrapy.Field()
-
     description = scrapy.Field()
     comments = scrapy.Field()
+    number_of_comments = scrapy.Field()
     faqs = scrapy.Field()
+    number_of_faqs = scrapy.Field()
 
 # Spider subclasses implement start_requests() and parse()
 class TestSpider(scrapy.spiders.CrawlSpider):
@@ -53,7 +55,7 @@ class TestSpider(scrapy.spiders.CrawlSpider):
 
         project_urls = []
 
-        #Loop acquires list of urls to crawl
+        # Loop acquires list of urls to crawl
         for url_sort_type in url_sort_types:
 
             # Magic sort type randomizes based on some seed value
@@ -82,16 +84,18 @@ class TestSpider(scrapy.spiders.CrawlSpider):
                     # Get the page after constructing url
                     driver.get(page_url)
 
-                    # Get the total number of live projects
-                    # if url_sort_type == "newest" and page == 1:
-                    #     proj_count = driver.find_element_by_xpath('//*[contains(@class,"count green")]')
-                    #     proj_count = proj_count.text
-                    #     proj_count = proj_count.encode('utf-8')
-                    #     proj_count = int(proj_count.replace(',', ""))
-                    #     print("Total number of live projects is ", proj_count)
 
                     # Gets the project urls
                     elements = driver.find_elements_by_xpath('//div[@class="js-track-project-card"]')
+
+                    # TODO The logger should probably be called here to store the pulled URL with logic on the inside
+
+                    log = logger.logger()
+                    log.init("test")
+
+
+
+
                     for element in elements:
 
                         link = element.find_element_by_tag_name("a")
@@ -101,44 +105,18 @@ class TestSpider(scrapy.spiders.CrawlSpider):
 
                         if url not in project_urls:
                             project_urls.append(url)
+                            log.add_url(url, False)
 
         percent_live_found = float(len(project_urls))/float(proj_count)*100.00
         print(len(project_urls), " project urls found.")
         print("Test spider found ", percent_live_found, "% of live Kickstarter projects")
 
+        log.write_out_log()
         for url in project_urls:
 
             yield scrapy.Request(url, callback=self.parse_xpaths)
 
         #driver.close()
-
-
-
-
-
-    # allowed_domains = ['kickstarter.com']
-    # start_urls = ['https://www.kickstarter.com/']#['http://www.kickstarter.com/discover']
-    #
-    # rules = (
-    #     # Rules for parsing links. Sends links to parse_xpaths. Works recursively.
-    #     scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('discover', 'projects'),
-    #                                                             deny=(
-    #                                                             'blog', 'profile', 'comments', 'posts', 'community',
-    #                                                             'faqs', 'updates', 'login')
-    #                                                             ), callback='parse_xpaths', follow=True),
-    #
-    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor()),
-    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('projects')
-    #     #                                                        ), callback='parse_xpaths')
-    #
-    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow='discover')),
-    #
-    #
-    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(deny=('profiles','comments'))),
-    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('projects',)), callback='parse'),
-    #     # scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(), callback='parse'),
-    #
-    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('questions')), callback='parse')
 
 
     # Main parsing function.
@@ -157,15 +135,6 @@ class TestSpider(scrapy.spiders.CrawlSpider):
             try:
                 # Use this one
                 name = response.xpath('//html/head/title').re(r'(\n.*\n)')[0].strip()
-
-                # name = response.xpath(
-                #                  '//*[contains(concat('
-                #                  ' " ", @class, " " ), concat( " ", "medium", " " )) and contains('
-                #                  'concat( " ", @class, " " ), concat( " ", "mb3", " " ))]').re(r'(\n.*\n)')[0].strip()
-                #
-                # pledge_numbers = response.xpath(
-                #     '//*[contains(concat( " ", @class, " " ), concat( " ", "js-usd_pledged", " " ))]/text()').re(
-                #     r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0].strip()
                 item['name'] = name
 
             except IndexError:
@@ -214,10 +183,16 @@ class TestSpider(scrapy.spiders.CrawlSpider):
             #print("The location is ", location)
             item['location'] = location
 
+            # Gets the category of the project
             category = response.xpath('//*[(@class = "nowrap navy-700 flex items-center medium mr3 type-12")]').re(r'(\n.*\n)')[1].strip()
             print("The category is ", category)
             item['category'] = category
 
+            # Gets the end date of the project
+            end_date = driver.find_element_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "type-12", " " ))]//*[contains(concat( " ", @class, " " ), concat( " ", "js-adjust-time", " " ))]')
+            item['end_date'] = end_date.text
+
+            # Start of code to find the all the different pledge/reward levels
             pledge_panels = driver.find_elements_by_xpath(
                 '//li[@class="hover-group js-reward-available pledge--available pledge-selectable-sidebar"]')
             pledge_list = []
@@ -225,58 +200,55 @@ class TestSpider(scrapy.spiders.CrawlSpider):
             for pledge_panel in pledge_panels:
                 #pledge_amounts = pledge_panel.find_element_by_xpath('//span[@class="money"]')
                 pledge_amounts = pledge_panel.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "pledge__amount", " " ))]//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]')
-
                 for pledge_amount in pledge_amounts:
                     #print("Pledge amounts are", pledge_amount.text, "for url", response.url)
                     pledge_list.append(pledge_amount.text)
 
-            end_date = driver.find_element_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "type-12", " " ))]//*[contains(concat( " ", @class, " " ), concat( " ", "js-adjust-time", " " ))]')
-            item['end_date'] = end_date.text
 
             reward_levels = "{"
             for pledges in pledge_list:
                 reward_levels = reward_levels+str(pledges)+";"
-
             reward_levels = reward_levels + "}"
 
+            # Concatenated list of reward/pledge $ amounts
             item['reward_levels'] = reward_levels
+            # Number of different pledge values
             item['number_of_reward_levels'] = len(pledge_list)
 
+            # Gets all the description text
+            # TODO could probably use some regex formatting
             description_text = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "formatted-lists", " " ))]//p')
             description = "{"
             for descriptions in description_text:
                 description = description+descriptions.text
-
             description = description+"}"
             item['description'] = description
 
+            # Find and concatenate all the comments for a project
             driver.get((response.url)+"/comments")
-
             comments = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "ml3", " " ))]//p')
-
             comment_list = "{"
             for comment in comments:
                 comment_list = comment_list+comment.text+";"
             comment_list = comment_list+"}"
-
             item['comments'] = comment_list
+            item['number_of_comments'] = len(comment_list)
 
+            # Find and concatenate all the faqs for a project
             driver.get((response.url)+"/faqs")
-
             faqs = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "ml3", " " ))]//p')
-
             faq_list = "{"
             for faq in faqs:
                 faq_list = faq_list+faq.text+";"
             faq_list = faq_list+"}"
-
             item['faqs'] = faq_list
+            item['number_of_faqs'] = len(faq_list)
 
+            #Item in this context is all the info about a single project
             return item
 
 
 # Item Pipeline that
-# TODO Refine this pipeline to filter out extraneous results
 class DuplicatesPipeline(object):
     def __init__(self):
             self.ids_seen = set()
@@ -289,6 +261,30 @@ class DuplicatesPipeline(object):
                 #self.ids_seen.add(item['id'])
                 self.ids_seen.add(item['name'])
                 return item
+
+
+
+class TraqSpider():
+    name = 'traq'
+
+    def start_requests(self):
+
+        traq_urls = []
+        start_page = "https://www.kicktraq.com/archive/"
+
+        for i in range(1,8000):
+            url = start_page+"?page="+str(i)
+            traq_urls = traq_urls.append(url)
+
+            for url in traq_urls:
+                yield scrapy.Request(url, callback=self.parse_xpaths)
+
+
+
+    #def parse_something(self):
+
+        #print("parsed a thing")
+
 
 # Land of discarded code.  Kept for reference.
 
@@ -332,19 +328,29 @@ class DuplicatesPipeline(object):
     #    for link in le.extract_links(response):
     #        yield scrapy.Request(link.url, callback=self.parse)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    # allowed_domains = ['kickstarter.com']
+    # start_urls = ['https://www.kickstarter.com/']#['http://www.kickstarter.com/discover']
+    #
+    # rules = (
+    #     # Rules for parsing links. Sends links to parse_xpaths. Works recursively.
+    #     scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('discover', 'projects'),
+    #                                                             deny=(
+    #                                                             'blog', 'profile', 'comments', 'posts', 'community',
+    #                                                             'faqs', 'updates', 'login')
+    #                                                             ), callback='parse_xpaths', follow=True),
+    #
+    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor()),
+    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('projects')
+    #     #                                                        ), callback='parse_xpaths')
+    #
+    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow='discover')),
+    #
+    #
+    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(deny=('profiles','comments'))),
+    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('projects',)), callback='parse'),
+    #     # scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(), callback='parse'),
+    #
+    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('questions')), callback='parse')
 
 # class PeacockSpider(scrapy.Spider):
 #     name = "peacock"
