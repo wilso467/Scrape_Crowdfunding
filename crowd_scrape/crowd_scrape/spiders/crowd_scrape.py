@@ -88,13 +88,8 @@ class TestSpider(scrapy.spiders.CrawlSpider):
                     # Gets the project urls
                     elements = driver.find_elements_by_xpath('//div[@class="js-track-project-card"]')
 
-                    # TODO The logger should probably be called here to store the pulled URL with logic on the inside
-
                     log = logger.logger()
                     log.init("test")
-
-
-
 
                     for element in elements:
 
@@ -264,27 +259,74 @@ class DuplicatesPipeline(object):
 
 
 
-class TraqSpider():
-    name = 'traq'
+class TraqSpider(scrapy.spiders.CrawlSpider):
+    name = "traq"
 
     def start_requests(self):
 
         traq_urls = []
-        start_page = "https://www.kicktraq.com/archive/"
+        start_page = ["https://www.kicktraq.com/archive/"]
 
-        for i in range(1,8000):
-            url = start_page+"?page="+str(i)
-            traq_urls = traq_urls.append(url)
+        for page in range(1, 2):  # 8000):
 
-            for url in traq_urls:
-                yield scrapy.Request(url, callback=self.parse_xpaths)
+            page_number = ["?page=", str(page)]
+            full_url = ""
+            url = ""
+            full_url = start_page + page_number
+            page_url = url.join(full_url)
+            traq_urls.append(page_url)
+
+
+        for url in traq_urls:
+            #yield scrapy.Request(url, callback=self.parse_traq)
+            yield scrapy.Request(url, callback=self.parse_arch_page)
+
+    def parse_arch_page(self, response):
+
+        archive_pages = []
+
+        #arch_page_link = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "project-infobox", " " ))]//a')
+
+        #This horrible regex monster finds the 'href' value of an <a>
+        arch_page_links = response.xpath('//h2//a').re(r'<a\s+(?:[^>]*?\s+)?href=([\"\'])(.*?)\1')
+        for arch_page_link in arch_page_links:
+            #print(" This is the partial link", arch_page_link)
+
+            #print(len(arch_page_link))
+
+            #temp=arch_page_link.re(r'<a\s+(?:[^>]*?\s+)?href=([\"\'])(.*?)\1')
+            #print temp
+            if len(arch_page_link) > 1:
+                arch_page = 'https://www.kicktraq.com' + arch_page_link
+                #print("This should be the full link", arch_page)
+                archive_pages.append(arch_page)
+
+
+        for arch_page in archive_pages:
+            yield scrapy.Request(arch_page, callback=self.parse_ks_link)
+
+    def parse_ks_link(self, response):
+
+        kickstarter_pages = []
+
+        log = logger.logger()
+        log.init("traq")
+
+        ks_link = response.xpath('//*[(@id = "button-backthis")]').re(r'<a\s+(?:[^>]*?\s+)?href=([\"\'])(.*?)\1')[1]
+        ks_link = ks_link.encode('utf-8')
+        #print("The kickstarter link is ", ks_link)
+
+        kickstarter_pages.append(ks_link)
+
+        for link in kickstarter_pages:
+            log.add_url(link, True)
+
+        log.write_out_log()
 
 
 
-    #def parse_something(self):
 
-        #print("parsed a thing")
-
+        #print(arch_page_link)
 
 # Land of discarded code.  Kept for reference.
 

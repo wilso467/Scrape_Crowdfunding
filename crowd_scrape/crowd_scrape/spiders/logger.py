@@ -14,11 +14,15 @@ class logger():
             raise ValueError("A non-string was passed to logger.init()")
         if crawl_type == "traq" or "test":
 
+            # TODO fix the init for JSON files
             # Check to see if the logger file is empty or exists, throw a warning if not
-            if os.stat("kickstarter.log").st_size == 0:
-                raise Warning(" !- Kickstarter log file is empty at start.  This could be a problem... -!")
+            if os.stat("kickstarter.log").st_size > 0:
+                #raise Warning(" !- Kickstarter log file is empty at start.  This could be a problem... -!")
             #open("kickstarter.log", "w")
-            self.url_dict = json.load(open("kickstarter.log"))
+            #self.url_dict = json.load(open("kickstarter.log"))
+
+            with open("kickstarter.log", 'r') as f:
+                self.url_dict = json.load(f)
         else:
             raise ValueError("An unknown crawl_type was passed to the logger.")
 
@@ -40,6 +44,7 @@ class logger():
 
     def write_out_log(self):
         url_dict = self.url_dict
+        print("This is the url dict", url_dict)
         json.dump(url_dict, open("kickstarter.log", 'w'))
 
 
