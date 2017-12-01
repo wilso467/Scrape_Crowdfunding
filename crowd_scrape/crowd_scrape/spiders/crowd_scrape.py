@@ -1,7 +1,8 @@
-# A python code to scrape data from crowdfund websites.
+# A python code to scrape data from crowdfunding websites.
 # @Evan M. Wilson 2017
 
 # Use with 'scrapy crawl test -o data.csv' in top directory to send data to csv
+# Use 'scrapy crawl traq' to find urls from
 
 import scrapy
 # from scrapy.linkextractors import LinkExtractor
@@ -34,6 +35,8 @@ class Project_Item(scrapy.Item):
     number_of_faqs = scrapy.Field()
     number_of_updates = scrapy.Field()
     updates = scrapy.Field()
+    num_pics = scrapy.Field()
+    num_vids = scrapy.Field()
 
 # Spider subclasses implement start_requests() and parse()
 
@@ -54,8 +57,9 @@ class TestSpider(scrapy.spiders.CrawlSpider):
         print("Total number of live projects is ", proj_count)
 
         # Kickstarter API sort type
-        # url_sort_types = ["newest", "end_date", "magic", "popularity"]
-        url_sort_types = ["magic"]
+        url_sort_types = ["newest", "end_date", "magic", "popularity", "most_backed", "most_funded"]
+        #url_sort_types = ["newest", "end_date", "magic", "popularity"]
+        #url_sort_types = ["magic"]
 
         project_urls = []
 
@@ -64,10 +68,10 @@ class TestSpider(scrapy.spiders.CrawlSpider):
 
             # Magic sort type randomizes based on some seed value
             # For magic, loop over a few random seeds to try to find all projects
-            if url_sort_type == "magic":
-                seeds = [str(random.randint(0, 999))]#, str(random.randint(0, 999)), str(random.randint(0, 9999)),
-                         #str(random.randint(0, 99999)), str(random.randint(0, 9999999)),str(random.randint(0, 9999999)),
-                         #str(random.randint(0, 999999))]
+            if url_sort_type == "magic" or url_sort_type == "most_backed" or url_sort_type == "most_funded":
+                seeds = [str(random.randint(0, 999)), str(random.randint(0, 999)), str(random.randint(0, 9999)),
+                         str(random.randint(0, 99999)), str(random.randint(0, 9999999)),str(random.randint(0, 9999999)),
+                         str(random.randint(0, 999999))]
             else:
                 seeds = [str(random.randint(0, 999))]
 
@@ -76,7 +80,7 @@ class TestSpider(scrapy.spiders.CrawlSpider):
                 base_url = ["https://www.kickstarter.com/discover/advanced?sort=", url_sort_type, "&seed=", seed]
 
                 # Max page index is 200, loop over all of them
-                for page in range(1, 2): #200):
+                for page in range(1, 200): #200):
 
                     page_number = ["&page=", str(page)]
                     full_url = ""
@@ -193,18 +197,28 @@ class TestSpider(scrapy.spiders.CrawlSpider):
             end_date = driver.find_element_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "type-12", " " ))]//*[contains(concat( " ", @class, " " ), concat( " ", "js-adjust-time", " " ))]')
             item['end_date'] = end_date.text
 
+            # This is all images -- even small ones.
+            pics = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "fit", " " ))]')
+            # pics = driver.find_elements_by_tag_name("img")
+            # print("The number of images is ", len(pics))
+            item['num_pics'] = len(pics)
+
+            #Get the number of videos
+            vids = driver.find_elements_by_tag_name("iframe")
+            item['num_vids'] = len(vids)
+
+
             # Start of code to find the all the different pledge/reward levels
             pledge_panels = driver.find_elements_by_xpath(
                 '//li[@class="hover-group js-reward-available pledge--available pledge-selectable-sidebar"]')
             pledge_list = []
 
             for pledge_panel in pledge_panels:
-                #pledge_amounts = pledge_panel.find_element_by_xpath('//span[@class="money"]')
+
                 pledge_amounts = pledge_panel.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "pledge__amount", " " ))]//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]')
                 for pledge_amount in pledge_amounts:
                     #print("Pledge amounts are", pledge_amount.text, "for url", response.url)
                     pledge_list.append(pledge_amount.text)
-
 
             reward_levels = "{"
             for pledges in pledge_list:
@@ -217,11 +231,7 @@ class TestSpider(scrapy.spiders.CrawlSpider):
             item['number_of_reward_levels'] = len(pledge_list)
 
             # Gets all the description text
-            # TODO could probably use some regex formatting -- replace spaces and newlines with no space
-            # TODO Add image count
-            # TODO Add video count
-            # TODO add like counter
-            # TODO split qualitative data into separate file
+
             description_text = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "formatted-lists", " " ))]//p')
             description = "{"
             for descriptions in description_text:
@@ -244,11 +254,11 @@ class TestSpider(scrapy.spiders.CrawlSpider):
             #faqs = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "ml3", " " ))]//p')
             #faqs = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "js-expanded", " " ))]//*[(((count(preceding-sibling::*) + 1) = 1) and parent::*)]//*[(((count(preceding-sibling::*) + 1) = 1) and parent::*)]')
             faqs = driver.find_elements_by_xpath('//*[@id="project-faqs"]')
-            print("Just the faqs, mame", faqs)
+            #print("Just the faqs, mame", faqs)
 
             faq_list = "{"
             for faq in faqs:
-                print(faq.text)
+                #print(faq.text)
                 faq_list = faq_list+faq.text+";"
             faq_list = faq_list+"}"
             item['faqs'] = faq_list
@@ -264,7 +274,7 @@ class TestSpider(scrapy.spiders.CrawlSpider):
             update_len = len(updates)
             start_date = updates[update_len-1].text
             item['start_date'] = start_date
-            print("Start date is ", start_date)
+            #print("Start date is ", start_date)
             item['number_of_updates'] = len(updates[1:update_len-2])
             # for update in updates:
             #     update_list = update_list+update.text+";"
@@ -276,8 +286,8 @@ class TestSpider(scrapy.spiders.CrawlSpider):
             #item['faqs'] = faq_list
             #item['number_of_faqs'] = len(faq_list)
 
+            #Gets the text for updates
             update_texts = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "grid-post__content", " " ))]//p')
-
             update_text_list = '{'
             for update_text in update_texts:
                 update_text_list = update_text_list+update_text.text+";"
@@ -369,6 +379,200 @@ class TraqSpider(scrapy.spiders.CrawlSpider):
         log.write_out_log()
 
         # print(arch_page_link)
+
+class LogSpider(scrapy.spiders.CrawlSpider):
+    name = "log"
+
+
+    def start_requests(self):
+        log = logger.logger()
+        log.init("log")
+
+        url_dict = log.url_dict
+
+        for url in url_dict:
+            # yield scrapy.Request(url, callback=self.parse_traq)
+            yield scrapy.Request(url, callback=self.parse_xpaths)
+
+    # This is inelegant copy-pasta, but works
+    # TODO use polymorphism or something to make this unnecessary
+    def parse_xpaths(self, response):
+        # Is this a 'projects' URL ?
+        regexp = re.compile(r'projects')
+        response.url
+
+        driver = web_driver_setup.web_driver_setup.driver
+        driver.get(response.url)
+
+        if regexp.search(response.url):
+            item = Project_Item()
+            item['url'] = response.url
+            try:
+                # Use this one
+                name = response.xpath('//html/head/title').re(r'(\n.*\n)')[0].strip()
+                item['name'] = name
+
+            except IndexError:
+                print('Caught IndexError parsing name')
+                # print('This url through an exception on parse: ', response.url)
+                # pass
+
+            try:
+                # Use this one
+                pledge_numbers = response.xpath('//*[@id="pledged"]').re(r'(?<=data-pledged=)"(.*[0-9])')[0]
+                #
+                item['total_raised'] = pledge_numbers
+
+            except IndexError:
+                print('Caught IndexError parsing pledged money')
+                # print('This url through an exception on parse: ', response.url)
+                # pass
+                item['total_raised'] = 'NOT FOUND'
+
+            try:
+                # Use this one
+                goal = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]').re(
+                    r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0].strip()
+                # goal = response.xpath('//*[@id="content-wrap"]/section/div/div[3]/div/div/div[3]/div[1]/
+                # span[3]/span[1]').re(r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0]
+                #
+                item['funding_target'] = goal
+
+            except IndexError:
+                print('Caught IndexError parsing goal')
+                # print('This url through an exception on parse: ', response.url)
+                # pass
+                item['funding_target'] = 'NOT FOUND'
+
+            try:
+                # Use this one
+                backers = response.xpath('//*[(@id = "backers_count")]').re(r'"[-0-9.,]*"')[0].strip()
+                item['num_backers'] = backers
+            except IndexError:
+                print('Caught IndexError on number of backers')
+                # print('This url through an exception on parse: ', response.url)
+                # pass
+                item['num_backers'] = 'NOT FOUND'
+
+            #This is ugly but ok...
+            location = response.xpath('//*[(@class = "nowrap navy-700 flex items-center medium type-12")]').re(r'(\n.*\n)')[1].strip() #[2].strip()
+            #print("The location is ", location)
+            item['location'] = location
+
+            # Gets the category of the project
+            category = response.xpath('//*[(@class = "nowrap navy-700 flex items-center medium mr3 type-12")]').re(r'(\n.*\n)')[1].strip()
+            print("The category is ", category)
+            item['category'] = category
+
+            # Gets the end date of the project
+            end_date = driver.find_element_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "type-12", " " ))]//*[contains(concat( " ", @class, " " ), concat( " ", "js-adjust-time", " " ))]')
+            item['end_date'] = end_date.text
+
+            # This is all images -- even small ones.
+            pics = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "fit", " " ))]')
+            # pics = driver.find_elements_by_tag_name("img")
+            # print("The number of images is ", len(pics))
+            item['num_pics'] = len(pics)
+
+            #Get the number of videos
+            vids = driver.find_elements_by_tag_name("iframe")
+            item['num_vids'] = len(vids)
+
+
+            # Start of code to find the all the different pledge/reward levels
+            pledge_panels = driver.find_elements_by_xpath(
+                '//li[@class="hover-group js-reward-available pledge--available pledge-selectable-sidebar"]')
+            pledge_list = []
+
+            for pledge_panel in pledge_panels:
+
+                pledge_amounts = pledge_panel.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "pledge__amount", " " ))]//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]')
+                for pledge_amount in pledge_amounts:
+                    #print("Pledge amounts are", pledge_amount.text, "for url", response.url)
+                    pledge_list.append(pledge_amount.text)
+
+            reward_levels = "{"
+            for pledges in pledge_list:
+                reward_levels = reward_levels+str(pledges)+";"
+            reward_levels = reward_levels + "}"
+
+            # Concatenated list of reward/pledge $ amounts
+            item['reward_levels'] = reward_levels
+            # Number of different pledge values
+            item['number_of_reward_levels'] = len(pledge_list)
+
+            # Gets all the description text
+
+            description_text = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "formatted-lists", " " ))]//p')
+            description = "{"
+            for descriptions in description_text:
+                description = description+descriptions.text
+            description = description+"}"
+            item['description'] = description
+
+            # Find and concatenate all the comments for a project
+            driver.get((response.url)+"/comments")
+            comments = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "ml3", " " ))]//p')
+            comment_list = "{"
+            for comment in comments:
+                comment_list = comment_list+comment.text+";"
+            comment_list = comment_list+"}"
+            item['comments'] = comment_list
+            item['number_of_comments'] = len(comment_list)
+
+            # Find and concatenate all the faqs for a project
+            driver.get((response.url)+"/faqs")
+            #faqs = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "ml3", " " ))]//p')
+            #faqs = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "js-expanded", " " ))]//*[(((count(preceding-sibling::*) + 1) = 1) and parent::*)]//*[(((count(preceding-sibling::*) + 1) = 1) and parent::*)]')
+            faqs = driver.find_elements_by_xpath('//*[@id="project-faqs"]')
+            #print("Just the faqs, mame", faqs)
+
+            faq_list = "{"
+            for faq in faqs:
+                #print(faq.text)
+                faq_list = faq_list+faq.text+";"
+            faq_list = faq_list+"}"
+            item['faqs'] = faq_list
+            time.sleep(20)
+            num_faqs = driver.find_element_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "project-nav__link--faqs", " " ))]//*[contains(concat( " ", @class, " " ), concat( " ", "count", " " ))]')#len(faq_list)
+            item['number_of_faqs'] = num_faqs.text
+
+
+            # Find how many updates there are
+            driver.get((response.url)+"/updates")
+            updates = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "js-adjust-time", " " ))]')
+
+            update_len = len(updates)
+            start_date = updates[update_len-1].text
+            item['start_date'] = start_date
+            #print("Start date is ", start_date)
+            item['number_of_updates'] = len(updates[1:update_len-2])
+            # for update in updates:
+            #     update_list = update_list+update.text+";"
+            # update_list = update_list+"}"
+
+            #print((response.url)+"/updates")
+            #print("This is the list of updates.", update_list )
+            #time.sleep(10)
+            #item['faqs'] = faq_list
+            #item['number_of_faqs'] = len(faq_list)
+
+            #Gets the text for updates
+            update_texts = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "grid-post__content", " " ))]//p')
+            update_text_list = '{'
+            for update_text in update_texts:
+                update_text_list = update_text_list+update_text.text+";"
+            update_text_list = update_text_list+"}"
+            item['updates'] = update_text_list
+
+            #Item in this context is all the info about a single project
+            return item
+
+
+
+
+
+
 
 # Land of discarded code.  Kept for reference.
 

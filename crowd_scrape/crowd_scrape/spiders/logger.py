@@ -13,7 +13,7 @@ class logger():
         #url_dict = self.url_dict
         if type(crawl_type) is not str:
             raise ValueError("A non-string was passed to logger.init()")
-        if crawl_type == "traq" or "test":
+        if crawl_type == "traq" or "test" or "log":
 
             with open("kickstarter.log", 'r') as f:
                 if os.stat("kickstarter.log").st_size > 0:
