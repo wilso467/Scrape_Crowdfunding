@@ -4,7 +4,7 @@
 # Use with 'scrapy crawl test -o data.csv' in top directory to send data to csv
 
 import scrapy
-from scrapy.linkextractors import LinkExtractor
+# from scrapy.linkextractors import LinkExtractor
 from scrapy.exceptions import DropItem
 import re
 import web_driver_setup
@@ -12,9 +12,9 @@ import logger
 import random
 import time
 
-# functions: start_requests() and parse()
-
 # Scrapy Item subclass with fields for Kickstarter data
+
+
 class Project_Item(scrapy.Item):
     name = scrapy.Field()
     total_raised = scrapy.Field()
@@ -32,8 +32,12 @@ class Project_Item(scrapy.Item):
     number_of_comments = scrapy.Field()
     faqs = scrapy.Field()
     number_of_faqs = scrapy.Field()
+    number_of_updates = scrapy.Field()
+    updates = scrapy.Field()
 
 # Spider subclasses implement start_requests() and parse()
+
+
 class TestSpider(scrapy.spiders.CrawlSpider):
     name = 'test'
 
@@ -50,7 +54,7 @@ class TestSpider(scrapy.spiders.CrawlSpider):
         print("Total number of live projects is ", proj_count)
 
         # Kickstarter API sort type
-        #url_sort_types = ["newest", "end_date", "magic", "popularity"]
+        # url_sort_types = ["newest", "end_date", "magic", "popularity"]
         url_sort_types = ["magic"]
 
         project_urls = []
@@ -96,11 +100,12 @@ class TestSpider(scrapy.spiders.CrawlSpider):
                         link = element.find_element_by_tag_name("a")
                         url = link.get_attribute("href")
 
-                        #print url
+                        print(url)
+                        #print(type(url))
 
                         if url not in project_urls:
                             project_urls.append(url)
-                            log.add_url(url, False)
+                            log.add_url(str(url.encode('utf8')), "open")
 
         percent_live_found = float(len(project_urls))/float(proj_count)*100.00
         print(len(project_urls), " project urls found.")
@@ -153,7 +158,8 @@ class TestSpider(scrapy.spiders.CrawlSpider):
                 # Use this one
                 goal = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]').re(
                     r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0].strip()
-                # goal = response.xpath('//*[@id="content-wrap"]/section/div/div[3]/div/div/div[3]/div[1]/span[3]/span[1]').re(r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0]
+                # goal = response.xpath('//*[@id="content-wrap"]/section/div/div[3]/div/div/div[3]/div[1]/
+                # span[3]/span[1]').re(r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0]
                 #
                 item['funding_target'] = goal
 
@@ -211,7 +217,11 @@ class TestSpider(scrapy.spiders.CrawlSpider):
             item['number_of_reward_levels'] = len(pledge_list)
 
             # Gets all the description text
-            # TODO could probably use some regex formatting
+            # TODO could probably use some regex formatting -- replace spaces and newlines with no space
+            # TODO Add image count
+            # TODO Add video count
+            # TODO add like counter
+            # TODO split qualitative data into separate file
             description_text = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "formatted-lists", " " ))]//p')
             description = "{"
             for descriptions in description_text:
@@ -231,13 +241,48 @@ class TestSpider(scrapy.spiders.CrawlSpider):
 
             # Find and concatenate all the faqs for a project
             driver.get((response.url)+"/faqs")
-            faqs = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "ml3", " " ))]//p')
+            #faqs = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "ml3", " " ))]//p')
+            #faqs = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "js-expanded", " " ))]//*[(((count(preceding-sibling::*) + 1) = 1) and parent::*)]//*[(((count(preceding-sibling::*) + 1) = 1) and parent::*)]')
+            faqs = driver.find_elements_by_xpath('//*[@id="project-faqs"]')
+            print("Just the faqs, mame", faqs)
+
             faq_list = "{"
             for faq in faqs:
+                print(faq.text)
                 faq_list = faq_list+faq.text+";"
             faq_list = faq_list+"}"
             item['faqs'] = faq_list
-            item['number_of_faqs'] = len(faq_list)
+            time.sleep(20)
+            num_faqs = driver.find_element_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "project-nav__link--faqs", " " ))]//*[contains(concat( " ", @class, " " ), concat( " ", "count", " " ))]')#len(faq_list)
+            item['number_of_faqs'] = num_faqs.text
+
+
+            # Find how many updates there are
+            driver.get((response.url)+"/updates")
+            updates = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "js-adjust-time", " " ))]')
+
+            update_len = len(updates)
+            start_date = updates[update_len-1].text
+            item['start_date'] = start_date
+            print("Start date is ", start_date)
+            item['number_of_updates'] = len(updates[1:update_len-2])
+            # for update in updates:
+            #     update_list = update_list+update.text+";"
+            # update_list = update_list+"}"
+
+            #print((response.url)+"/updates")
+            #print("This is the list of updates.", update_list )
+            #time.sleep(10)
+            #item['faqs'] = faq_list
+            #item['number_of_faqs'] = len(faq_list)
+
+            update_texts = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "grid-post__content", " " ))]//p')
+
+            update_text_list = '{'
+            for update_text in update_texts:
+                update_text_list = update_text_list+update_text.text+";"
+            update_text_list = update_text_list+"}"
+            item['updates'] = update_text_list
 
             #Item in this context is all the info about a single project
             return item
@@ -267,7 +312,7 @@ class TraqSpider(scrapy.spiders.CrawlSpider):
         traq_urls = []
         start_page = ["https://www.kicktraq.com/archive/"]
 
-        for page in range(1, 2):  # 8000):
+        for page in range(1, 8000):  # 8000):
 
             page_number = ["?page=", str(page)]
             full_url = ""
@@ -285,20 +330,20 @@ class TraqSpider(scrapy.spiders.CrawlSpider):
 
         archive_pages = []
 
-        #arch_page_link = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "project-infobox", " " ))]//a')
+        # arch_page_link = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "project-infobox", " " ))]//a')
 
-        #This horrible regex monster finds the 'href' value of an <a>
+        # This horrible regex monster finds the 'href' value of an <a>
         arch_page_links = response.xpath('//h2//a').re(r'<a\s+(?:[^>]*?\s+)?href=([\"\'])(.*?)\1')
         for arch_page_link in arch_page_links:
-            #print(" This is the partial link", arch_page_link)
+            # print(" This is the partial link", arch_page_link)
 
-            #print(len(arch_page_link))
+             # print(len(arch_page_link))
 
-            #temp=arch_page_link.re(r'<a\s+(?:[^>]*?\s+)?href=([\"\'])(.*?)\1')
-            #print temp
+            # temp=arch_page_link.re(r'<a\s+(?:[^>]*?\s+)?href=([\"\'])(.*?)\1')
+            # print temp
             if len(arch_page_link) > 1:
                 arch_page = 'https://www.kicktraq.com' + arch_page_link
-                #print("This should be the full link", arch_page)
+                # print("This should be the full link", arch_page)
                 archive_pages.append(arch_page)
 
 
@@ -314,19 +359,16 @@ class TraqSpider(scrapy.spiders.CrawlSpider):
 
         ks_link = response.xpath('//*[(@id = "button-backthis")]').re(r'<a\s+(?:[^>]*?\s+)?href=([\"\'])(.*?)\1')[1]
         ks_link = ks_link.encode('utf-8')
-        #print("The kickstarter link is ", ks_link)
+        # print("The kickstarter link is ", ks_link)
 
         kickstarter_pages.append(ks_link)
 
         for link in kickstarter_pages:
-            log.add_url(link, True)
+            log.add_url(link, "closed")
 
         log.write_out_log()
 
-
-
-
-        #print(arch_page_link)
+        # print(arch_page_link)
 
 # Land of discarded code.  Kept for reference.
 

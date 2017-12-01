@@ -2,6 +2,7 @@
 
 import os
 import json
+import simplejson
 import io
 
 class logger():
@@ -14,38 +15,37 @@ class logger():
             raise ValueError("A non-string was passed to logger.init()")
         if crawl_type == "traq" or "test":
 
-            # TODO fix the init for JSON files
-            # Check to see if the logger file is empty or exists, throw a warning if not
-            if os.stat("kickstarter.log").st_size > 0:
-                #raise Warning(" !- Kickstarter log file is empty at start.  This could be a problem... -!")
-            #open("kickstarter.log", "w")
-            #self.url_dict = json.load(open("kickstarter.log"))
-
             with open("kickstarter.log", 'r') as f:
-                self.url_dict = json.load(f)
+                if os.stat("kickstarter.log").st_size > 0:
+                    self.url_dict = simplejson.load(f)
+                    # print("The json file ", f.name, " was loaded.")
+                else:
+                    print("No existing json log file was found...")
         else:
             raise ValueError("An unknown crawl_type was passed to the logger.")
-
-
 
     def add_url(self, url, status):
         url_dict = self.url_dict
 
-        if type(url) is not str or status is not bool:
-            raise ValueError("logger.add_url was called with the wrong type (string and bool) ")
-        # If we find the url, check and see if it is open (false) or close (true)
-        # If we don't find the url, make and entry with status
+        if type(url) is not str or type(status) is not str:
+            raise ValueError("logger.add_url was called with the wrong type ")
+        # If we find the url, check and see if it is open  or closed
+
         if url in url_dict:
-            if url_dict[url] == False and status == True:
+            if url_dict[url] == "open" and status == "closed":
                 url_dict[url] == status
+
+        # If we don't find the url, make an entry with status
         else:
             url_dict[url] = status
 
-
+    # Writes out the log file in json format which is easy for machines and people to read/write
     def write_out_log(self):
         url_dict = self.url_dict
-        print("This is the url dict", url_dict)
+        # print("This is the url dict", url_dict)
         json.dump(url_dict, open("kickstarter.log", 'w'))
+        print("The logfile write out is complete.")
+
 
 
 
