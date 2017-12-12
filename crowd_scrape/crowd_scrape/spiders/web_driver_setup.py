@@ -4,11 +4,19 @@
 import selenium as se
 from selenium import webdriver
 import os
+import platform
 
 class web_driver_setup():
 
     path = os.path.dirname(__file__)
-    driver_path = os.path.join(path, 'chromedriver.exe')
+
+    system = platform.system()
+    if system == 'Windows':
+        driver_path = os.path.join(path, 'chromedriver.exe')
+    elif system == 'Linux':
+        driver_path = os.path.join(path, 'chromedriver')
+    elif system == 'Darwin':
+        driver_path = os.path.join(path, 'chromedrivermac')
 
     print("This is the chrome driver path", driver_path)
 
