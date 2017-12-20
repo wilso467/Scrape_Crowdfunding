@@ -46,20 +46,47 @@ class TestSpider(scrapy.spiders.CrawlSpider):
 
     def start_requests(self):
         # Get Chrome web driver from helper function
-        driver = web_driver_setup.web_driver_setup.driver
+        #driver = web_driver_setup.chrome_driver_setup.driver
+        #driver = web_driver_setup.phantom_driver_setup.driver
 
-        driver.get("https://www.kickstarter.com/")
-        live_projects = driver.find_element_by_xpath('//*[(text()="Live projects")]')
-        proj_count = live_projects.find_elements_by_xpath('//p[@class="bold"]')
-        proj_count = proj_count[3].text
-        proj_count = proj_count.encode('utf-8')
-        proj_count = int(proj_count.replace(',', ""))
-        print("Total number of live projects is ", proj_count)
+        driver_set_up = web_driver_setup.web_driver_setup("test")
+        driver = driver_set_up.driver
+
+        #driver.get("https://www.kickstarter.com/")
+        #driver.save_screenshot('screenshot.png')
+        #time.sleep(2)
+
+        #driver.get("https://www.kickstarter.com/discover/advanced")
+        #driver.save_screenshot('advanced.png')
+        #live_projects = driver.find_element_by_xpath('//*[(text()="Live projects")]')
+        #proj_count = live_projects.find_elements_by_xpath('//p[@class="bold"]')s
+
+        #proj_count = driver.find_elements_by_xpath('//p[@class="bold"]')
+
+
+        #proj_count = driver.find_elements_by_xpath('')
+
+        #print proj_count
+
+        #print ("This is the proj count",len(proj_count),proj_count[0].text.encode('utf-8'), proj_count[1].text,proj_count[2].text,proj_count[3].text)
+
+        #proj_count = proj_count[3].text
+
+        #proj_count = proj_count.text
+
+        #proj_count = proj_count.encode('utf-8')
+
+        #print ("This is the proj count", proj_count)
+        #time.sleep(2)
+        #proj_count = int(proj_count.replace(',', ""))
+        #print("Total number of live projects is ", proj_count)
 
         # Kickstarter API sort type
-        url_sort_types = ["newest", "end_date", "magic", "popularity", "most_backed", "most_funded"]
+
+        # Uncomment this when not testing...
+        #url_sort_types = ["newest", "end_date", "magic", "popularity", "most_backed", "most_funded"]
         #url_sort_types = ["newest", "end_date", "magic", "popularity"]
-        #url_sort_types = ["magic"]
+        url_sort_types = ["magic"]
 
         project_urls = []
 
@@ -69,9 +96,12 @@ class TestSpider(scrapy.spiders.CrawlSpider):
             # Magic sort type randomizes based on some seed value
             # For magic, loop over a few random seeds to try to find all projects
             if url_sort_type == "magic" or url_sort_type == "most_backed" or url_sort_type == "most_funded":
-                seeds = [str(random.randint(0, 999)), str(random.randint(0, 999)), str(random.randint(0, 9999)),
-                         str(random.randint(0, 99999)), str(random.randint(0, 9999999)),str(random.randint(0, 9999999)),
-                         str(random.randint(0, 999999))]
+                seeds = [str(random.randint(0, 999))]
+
+                #Uncomment this when not testing...
+                # seeds = [str(random.randint(0, 999)), str(random.randint(0, 999)), str(random.randint(0, 9999)),
+                #          str(random.randint(0, 99999)), str(random.randint(0, 9999999)),str(random.randint(0, 9999999)),
+                #          str(random.randint(0, 999999))]
             else:
                 seeds = [str(random.randint(0, 999))]
 
@@ -80,7 +110,7 @@ class TestSpider(scrapy.spiders.CrawlSpider):
                 base_url = ["https://www.kickstarter.com/discover/advanced?sort=", url_sort_type, "&seed=", seed]
 
                 # Max page index is 200, loop over all of them
-                for page in range(1, 200): #200):
+                for page in range(1, 2):#200): #200):
 
                     page_number = ["&page=", str(page)]
                     full_url = ""
@@ -109,19 +139,26 @@ class TestSpider(scrapy.spiders.CrawlSpider):
 
                         if url not in project_urls:
                             project_urls.append(url)
+                            print url
+                            print str(url.encode('utf8'))
                             log.add_url(str(url.encode('utf8')), "open")
 
-        percent_live_found = float(len(project_urls))/float(proj_count)*100.00
+        #percent_live_found = float(len(project_urls))/float(proj_count)*100.00
         print(len(project_urls), " project urls found.")
-        print("Test spider found ", percent_live_found, "% of live Kickstarter projects")
+        #print("Test spider found ", percent_live_found, "% of live Kickstarter projects")
 
         log.write_out_log()
-        for url in project_urls:
+        time.sleep(5)
+        # for url in project_urls:
+        #
+        #     yield scrapy.Request(url, callback=self.parse_xpaths)
 
-            yield scrapy.Request(url, callback=self.parse_xpaths)
+        for url in project_urls:
+            yield scrapy.Request(url, callback=self.parse)
 
         #driver.close()
 
+    #def parse_easy(self,response):
 
     # Main parsing function.
     def parse_xpaths(self, response):
@@ -130,7 +167,8 @@ class TestSpider(scrapy.spiders.CrawlSpider):
         regexp = re.compile(r'projects')
         response.url
 
-        driver = web_driver_setup.web_driver_setup.driver
+        #driver = web_driver_setup.web_driver_setup.driver
+        driver = web_driver_setup.phantom_driver_setup.driver
         driver.get(response.url)
 
         if regexp.search(response.url):
@@ -322,7 +360,7 @@ class TraqSpider(scrapy.spiders.CrawlSpider):
         traq_urls = []
         start_page = ["https://www.kicktraq.com/archive/"]
 
-        for page in range(1, 8000):  # 8000):
+        for page in range(6700, 8000):#(1, 8000):  # 8000): 46
 
             page_number = ["?page=", str(page)]
             full_url = ""
@@ -359,6 +397,7 @@ class TraqSpider(scrapy.spiders.CrawlSpider):
 
         for arch_page in archive_pages:
             yield scrapy.Request(arch_page, callback=self.parse_ks_link)
+            #time.sleep(0.75)
 
     def parse_ks_link(self, response):
 
@@ -568,138 +607,6 @@ class LogSpider(scrapy.spiders.CrawlSpider):
             #Item in this context is all the info about a single project
             return item
 
-
-
-
-
-
-
-# Land of discarded code.  Kept for reference.
-
-# class KickstartSpider(scrapy.Spider):
-#     name = "kicker"
-#
-#     # Must return iterable Requests object
-#     def start_requests(self):
-#
-#         urls = ['https://www.kickstarter.com/projects/1192053011/forbidden-lands-retro-open-world-survival-fantasy']
-#
-#         for url in urls:
-#             yield scrapy.Request(url=url, callback=self.parse)
-#
-#     def parse(self,response):
-#
-#         # Find all the links from the website
-#         #le = scrapy.linkextractors.LinkExtractor()
-#         #print('Parsing links...')
-#         #for link in le.extract_links(response):
-#         #    yield scrapy.Request(link.url, callback=self.parse)
-#             #print(link.url)
-#
-#
-#         # Finding these via specific xpath is a bit of a 'hack.'  Clever regex would be better.
-#         name = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "medium", " " )) and contains(concat( " ", @class, " " ), concat( " ", "mb3", " " ))]').extract_first()
-#         pledge_numbers = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "js-usd_pledged", " " ))]/text()').extract_first()
-#         goal = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]').extract_first()
-#         backer_numbers = response.xpath('//*[(@id = "backers_count")]').extract_first()
-#
-#         print(name)
-#         print(pledge_numbers)
-#         print(backer_numbers)
-#         print(goal)
-
-
-
-    # def link_parse(self, response):
-    #    le = scrapy.LinkExtractor()
-    #    print('Parsing links...')
-    #    for link in le.extract_links(response):
-    #        yield scrapy.Request(link.url, callback=self.parse)
-
-    # allowed_domains = ['kickstarter.com']
-    # start_urls = ['https://www.kickstarter.com/']#['http://www.kickstarter.com/discover']
-    #
-    # rules = (
-    #     # Rules for parsing links. Sends links to parse_xpaths. Works recursively.
-    #     scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('discover', 'projects'),
-    #                                                             deny=(
-    #                                                             'blog', 'profile', 'comments', 'posts', 'community',
-    #                                                             'faqs', 'updates', 'login')
-    #                                                             ), callback='parse_xpaths', follow=True),
-    #
-    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor()),
-    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('projects')
-    #     #                                                        ), callback='parse_xpaths')
-    #
-    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow='discover')),
-    #
-    #
-    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(deny=('profiles','comments'))),
-    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('projects',)), callback='parse'),
-    #     # scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(), callback='parse'),
-    #
-    #     #scrapy.spiders.Rule(scrapy.linkextractors.LinkExtractor(allow=('questions')), callback='parse')
-
-# class PeacockSpider(scrapy.Spider):
-#     name = "peacock"
-#     allowed_domains = ['kickstarter.com']
-#
-#     #start_urls = ['http://www..kickstarter.com']
-#
-#     def start_requests(self):
-#         url = 'http://www.kickstarter.com'
-#         yield scrapy.Request(url=url, callback=self.parse)
-#
-#
-#     def parse(self, response):
-#         print('do some other stuff')
-#
-#         le = LinkExtractor(deny=('profiles','comments'),)
-#         for link in le.extract_links(response):
-#             yield scrapy.Request(link.url, callback=self.parse_xpaths)
-#
-#
-#     def parse_xpaths(self, response):
-#
-#         # This is almost correct but the formatting is no good.
-#         # name = response.xpath(
-#         #     '//*[contains(concat( " ", @class, " " ), concat( " ", "medium", " " )) and contains(concat( " ", @class, " " ), concat( " ", "mb3", " " ))]').extract_first()
-#
-#         # Xpaths picks out CSS elements on a web page, the quasi regex it uses is hacky, but workable for now
-#         # These characters select out the name of a project on a project page.  The regex/strip() cleans the output.
-#
-#         print('The current URL is', response.url)
-#         name = response.xpath(
-#             '//*[contains(concat('
-#             ' " ", @class, " " ), concat( " ", "medium", " " )) and contains('
-#             'concat( " ", @class, " " ), concat( " ", "mb3", " " ))]').extract_first()
-#
-#
-#
-#         if (name != None) and (name!= 'None'):
-#
-#             name = response.xpath(
-#                 '//*[contains(concat('
-#                 ' " ", @class, " " ), concat( " ", "medium", " " )) and contains('
-#                 'concat( " ", @class, " " ), concat( " ", "mb3", " " ))]').re(r'(\n.*\n)')[0].strip()
-#
-#             print('The project name is', ' ', name)
-#
-#
-#             #pledge_numbers = response.xpath(
-#             #    '//*[contains(concat( " ", @class, " " ), concat( " ", "js-usd_pledged", " " ))]/text()').extract_first().strip()
-#
-#             pledge_numbers = response.xpath(
-#                 '//*[contains(concat( " ", @class, " " ), concat( " ", "js-usd_pledged", " " ))]/text()').re(
-#                 r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0].strip()
-#
-#             goal = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]').re(
-#                 r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0].strip()
-#
-#             backers = response.xpath('//*[(@id = "backers_count")]').re(r'"[-0-9.,]*"')[0].strip()
-#
-#         else:
-#             print('Nothing to find here')
 
 
 
