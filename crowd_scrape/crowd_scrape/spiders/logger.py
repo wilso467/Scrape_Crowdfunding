@@ -3,6 +3,7 @@
 import os
 import json
 import simplejson
+import re
 import io
 
 class logger():
@@ -29,6 +30,11 @@ class logger():
 
         if type(url) is not str or type(status) is not str:
             raise ValueError("logger.add_url was called with the wrong type ")
+
+        # Get rid of the "ref=XXX" part of the url which makes things cumbersome
+
+        url = self.strip_ref(url)
+
         # If we find the url, check and see if it is open  or closed
 
         if url in url_dict:
@@ -46,6 +52,13 @@ class logger():
         json.dump(url_dict, open("kickstarter.log", 'w'))
         print("The logfile write out is complete.")
 
+    def strip_ref(self, url):
+        if type(url) is not str:
+            raise ValueError("A non-string was passed to strip.")
+
+        regexp = re.compile('(?:(?!\?ref=).)*')
+
+        return regexp.search(url).group(0)
 
 
 
