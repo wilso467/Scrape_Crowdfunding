@@ -39,7 +39,7 @@ class logger():
 
         if url in url_dict:
             if url_dict[url] == "open" and status == "closed":
-                url_dict[url] == status
+                url_dict[url] = status
 
         # If we don't find the url, make an entry with status
         else:
