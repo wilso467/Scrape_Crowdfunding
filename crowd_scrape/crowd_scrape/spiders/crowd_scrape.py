@@ -404,6 +404,9 @@ class LogSpider(scrapy.spiders.CrawlSpider):
 
                 location = lc_list[0]
                 category = lc_list[1]
+
+                item['location'] = location
+                item['category'] = category
             elif status == "open":
                 try:
 
