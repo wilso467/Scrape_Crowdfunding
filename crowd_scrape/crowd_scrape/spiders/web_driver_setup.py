@@ -27,6 +27,8 @@ class web_driver_setup():
             self.setup_chromedriver()
         elif crawl_type=="traq":
             self.setup_chromedriver()
+        elif crawl_type == "dumb":
+            self.setup_chromedriver()
         else:
             raise ValueError(" An unknown crawl type "+crawl_type+" was passed to web_driver_setup. ")
 

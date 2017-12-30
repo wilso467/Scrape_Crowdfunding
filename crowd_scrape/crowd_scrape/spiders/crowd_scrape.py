@@ -275,24 +275,22 @@ class LogSpider(scrapy.spiders.CrawlSpider):
             elif status == "open":
                 print("Find the dates for an open project")
 
-                #start_date_element = driver.find_element_by_xpath('//*[contains(@class, "js-state_changed_at")]')
+                # start_date_element = driver.find_element_by_xpath('//*[contains(@class, "js-state_changed_at")]')
                 # start_date_element = driver.find_element_by_xpath('//*[@class="js-state_changed_at"]')
                 # start_date_element = start_date_element.find_element_by_xpath('//time')
 
-                #print("This is the start date for an open project", start_date_element.get_attribute('datetime'))
+                # print("This is the start date for an open project", start_date_element.get_attribute('datetime'))
 
                 end_date_element = driver.find_element_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "type-12", " " ))]//*[contains(concat( " ", @class, " " ), concat( " ", "js-adjust-time", " " ))]')
 
                 print("This is the end date for an open project", end_date_element.get_attribute('datetime'))
 
-                #start_date = start_date_element.get_attribute('datetime')
+                # start_date = start_date_element.get_attribute('datetime')
                 start_date = driver.find_element_by_xpath('//*[@class="js-adjust-time"]').text
                 end_date = end_date_element.get_attribute('datetime')
 
                 item['start_date'] = start_date
                 item['end_date'] = end_date
-
-
 
             try:
                 # Use this one
@@ -316,30 +314,81 @@ class LogSpider(scrapy.spiders.CrawlSpider):
                 # pass
                 item['total_raised'] = 'NOT FOUND'
 
-            try:
-                # Use this one
-                goal = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]').re(
-                    r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0].strip()
-                # goal = response.xpath('//*[@id="content-wrap"]/section/div/div[3]/div/div/div[3]/div[1]/
-                # span[3]/span[1]').re(r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0]
-                #
-                item['funding_target'] = goal
+            if item['total_raised'] == 'NOT FOUND':
+                try:
 
-            except IndexError:
-                print('Caught IndexError parsing goal')
-                # print('This url through an exception on parse: ', response.url)
-                # pass
-                item['funding_target'] = 'NOT FOUND'
+                    pledge_numbers = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "mb0", " " ))]'
+                                                    '//*[contains(concat( " ", @class, " " ),'
+                                                    ' concat( " ", "money", " " ))]').re(
+                        r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')
+
+                    item['total_raised'] = pledge_numbers
+                except:
+                    print('Caught a super bad error parsing total funding raised')
+
+                    item['total_raised'] = 'NOT FOUND'
+                    pass
+
+
+
+            if status == "open":
+                try:
+                    # Use this one
+                    goal = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]').re(
+                        r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0].strip()
+                    # goal = response.xpath('//*[@id="content-wrap"]/section/div/div[3]/div/div/div[3]/div[1]/
+                    # span[3]/span[1]').re(r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0]
+                    #
+                    item['funding_target'] = goal
+
+                except IndexError:
+                    print('Caught IndexError parsing goal')
+                    # print('This url through an exception on parse: ', response.url)
+                    # pass
+                    item['funding_target'] = 'NOT FOUND'
+
+            elif status == "closed":
+                try:
+                    goal = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "navy-500", " " ))]'
+                                      '//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]').re(
+                        r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')
+
+                    item['funding_target'] = goal
+
+                except:
+                    print('Caught a super bad error parsing funding goal')
+                    item['funding_target'] = 'NOT FOUND'
+                    pass
 
             try:
                 # Use this one
                 backers = response.xpath('//*[(@id = "backers_count")]').re(r'"[-0-9.,]*"')[0].strip()
                 item['num_backers'] = backers
-            except IndexError:
+            except:
                 print('Caught IndexError on number of backers')
                 # print('This url through an exception on parse: ', response.url)
                 # pass
                 item['num_backers'] = 'NOT FOUND'
+                pass
+
+            # Another try-except that should work for closed projects
+            # This xpath just happens to get both amount raised and # backers
+            if item['num_backers'] == 'NOT FOUND':
+                try:
+
+                    backers_amt = driver.find_element_by_xpath('//div[@class="mb0"]')
+
+                    # Handy xpath magic for finding integers in a string
+                    temp_back = [int(s) for s in backers_amt.text.split() if s.isdigit()]
+
+                    backers = temp_back[0]
+
+                    item['num_backers'] = backers
+
+                except:
+                    print('Caught a super bad error finding number of backers')
+                    item['num_backers'] = 'NOT FOUND'
+
 
             if status == "closed":
                 # Get the category and location
@@ -356,20 +405,23 @@ class LogSpider(scrapy.spiders.CrawlSpider):
                 location = lc_list[0]
                 category = lc_list[1]
             elif status == "open":
-                location = "INTENTIONALLY_BLANK"
-                category = "INTENTIONALLY_BLANK"
+                try:
 
+                    #This is ugly but ok...
+                    location = response.xpath('//*[(@class = "nowrap navy-700 flex items-center medium type-12")]').re(r'(\n.*\n)')[1].strip() #[2].strip()
+                    #print("The location is ", location)
+                    item['location'] = location
 
+                    # Gets the category of the project
+                    category = response.xpath('//*[(@class = "nowrap navy-700 flex items-center medium mr3 type-12")]').re(r'(\n.*\n)')[1].strip()
+                    #print("The category is ", category)
+                    item['category'] = category
+                except:
 
-            #This is ugly but ok...
-            #location = response.xpath('//*[(@class = "nowrap navy-700 flex items-center medium type-12")]').re(r'(\n.*\n)')[1].strip() #[2].strip()
-            #print("The location is ", location)
-            item['location'] = location
-
-            # Gets the category of the project
-            #category = response.xpath('//*[(@class = "nowrap navy-700 flex items-center medium mr3 type-12")]').re(r'(\n.*\n)')[1].strip()
-            #print("The category is ", category)
-            item['category'] = category
+                    print("Caught nasty exception parsing category and location")
+                    item['location'] = 'NOT FOUND'
+                    item['category'] = 'NOT FOUND'
+                    pass
 
             # Gets the end date of the project
             #end_date = driver.find_element_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "type-12", " " ))]//*[contains(concat( " ", @class, " " ), concat( " ", "js-adjust-time", " " ))]')
@@ -425,30 +477,24 @@ class LogSpider(scrapy.spiders.CrawlSpider):
 
             # Start of code to find the all the different pledge/reward levels
 
-            # pledge_panels = driver.find_elements_by_xpath(
-            #     '//li[@class="hover-group js-reward-available pledge--available pledge-selectable-sidebar"]')
-            # pledge_list = []
-            #
-            # if len(pledge_panels)>0:
-            #     print("I found some pledge panels")
-            # else:
-            #     print("I didn't find any pledge panels")
-            #
-            #
-            # for pledge_panel in pledge_panels:
-            #
-            #     pledge_amounts = pledge_panel.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "pledge__amount", " " ))]//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]')
-            #     for pledge_amount in pledge_amounts:
-            #         #print("Pledge amounts are", pledge_amount.text, "for url", response.url)
-            #         pledge_list.append(pledge_amount.text)
-
             outer_level_pledge_panel = driver.find_element_by_xpath('//ol')
             pledge_amounts = outer_level_pledge_panel.find_elements_by_xpath('.//*[@class="pledge__amount"]')
+
+            # if len(pledge_amounts) > 0:
+            #
+            #     print("I found pledge amounts")
+            #
+            # else:
+            #
+            #     print("I didn't find pledge amounts")
+
             pledge_list = []
             for pledge_amount in pledge_amounts:
-                money = pledge_amount.find_element_by_xpath('.//span[@class="money"]')
-
-                pledge_list.append(money.text)
+                try:
+                    money = pledge_amount.find_element_by_xpath('.//*[@class="money"]')
+                    pledge_list.append(money.text)
+                except:
+                    print("Caught a 'NoSuchElementException' ")
 
 
             reward_levels = "{"
