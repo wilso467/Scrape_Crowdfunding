@@ -54,9 +54,9 @@ class TestSpider(scrapy.spiders.CrawlSpider):
         # Kickstarter API sort type
 
         # Uncomment this when not testing...
-        #url_sort_types = ["newest", "end_date", "magic", "popularity", "most_backed", "most_funded"]
+        url_sort_types = ["newest", "end_date", "magic", "popularity", "most_backed", "most_funded"]
         #url_sort_types = ["newest", "end_date", "magic", "popularity"]
-        url_sort_types = ["magic"]
+        #url_sort_types = ["magic"]
 
         project_urls = []
 
@@ -66,12 +66,12 @@ class TestSpider(scrapy.spiders.CrawlSpider):
             # Magic sort type randomizes based on some seed value
             # For magic, loop over a few random seeds to try to find all projects
             if url_sort_type == "magic" or url_sort_type == "most_backed" or url_sort_type == "most_funded":
-                seeds = [str(random.randint(0, 999))]
+                #seeds = [str(random.randint(0, 999))]
 
                 #Uncomment this when not testing...
-                # seeds = [str(random.randint(0, 999)), str(random.randint(0, 999)), str(random.randint(0, 9999)),
-                #          str(random.randint(0, 99999)), str(random.randint(0, 9999999)),str(random.randint(0, 9999999)),
-                #          str(random.randint(0, 999999))]
+                seeds = [str(random.randint(0, 999)), str(random.randint(0, 999)), str(random.randint(0, 9999)),
+                         str(random.randint(0, 99999)), str(random.randint(0, 9999999)),str(random.randint(0, 9999999)),
+                         str(random.randint(0, 999999))]
             else:
                 seeds = [str(random.randint(0, 999))]
 
@@ -80,7 +80,7 @@ class TestSpider(scrapy.spiders.CrawlSpider):
                 base_url = ["https://www.kickstarter.com/discover/advanced?sort=", url_sort_type, "&seed=", seed]
 
                 # Max page index is 200, loop over all of them
-                for page in range(1, 2):#200): #200):
+                for page in range(1, 200):#200): #200):
 
                     page_number = ["&page=", str(page)]
                     full_url = ""
