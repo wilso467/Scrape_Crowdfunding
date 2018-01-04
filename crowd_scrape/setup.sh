@@ -8,7 +8,7 @@ virtualenv -p `which python2` ~/venv
 
 
 # Now get the source:
-git clone https://github.com/wilso467/Scrape_Crowdfunding
+#git clone https://github.com/wilso467/Scrape_Crowdfunding
 
 # Now install the necessary packages
 pip install -r ~/Scrape_Crowdfunding/crowd_scrape/requirements.txt
