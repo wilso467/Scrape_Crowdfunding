@@ -153,7 +153,7 @@ class TraqSpider(scrapy.spiders.CrawlSpider):
         traq_urls = []
         start_page = ["https://www.kicktraq.com/archive/"]
 
-        for page in range(6700, 8000):#(1, 8000):  # 8000): 46
+        for page in range(7000, 8000):#(1, 8000):  # 8000): 46
 
             page_number = ["?page=", str(page)]
             full_url = ""

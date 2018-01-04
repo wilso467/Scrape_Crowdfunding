@@ -1,0 +1,5 @@
+##Requirements for crowd scrape
+
+scrapy
+selenium
+simplejson
