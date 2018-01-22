@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#A shell script to run crowd scrape with cron.
+#Copy this into /etc/cron.weekly or /etc/cron.daily
+#To check to make sure the cron daemon is working, use 
+# ps aux | grep crond
+
+#cron is finicky about file paths, be sure to use the ABSOLUTE PATH
+cd /home/ubuntu/Scrape_Crowdfunding/crowd_scrape/
+
+#source setup.sh
+
+. setup.sh
+
+#scrapy crawl dumb &>> cron_dumb.log
+
+scrapy crawl test
+
