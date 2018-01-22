@@ -6,6 +6,7 @@
 # ps aux | grep crond
 
 #cron is finicky about file paths, be sure to use the ABSOLUTE PATH
+#Change this to match your exact ABSOLUTE PATH to Scrape_Crowdfunding
 cd /home/ubuntu/Scrape_Crowdfunding/crowd_scrape/
 
 #source setup.sh
