@@ -55,8 +55,8 @@ class TestSpider(scrapy.spiders.CrawlSpider):
 
         # Uncomment this when not testing...
         #url_sort_types = ["newest", "end_date", "magic", "popularity", "most_backed", "most_funded"]
-        #url_sort_types = ["newest", "end_date", "magic", "popularity"]
-        url_sort_types = ["magic"]
+        url_sort_types = ["newest", "end_date", "magic", "popularity"]
+        #url_sort_types = ["magic"]
 
         project_urls = []
 
@@ -66,21 +66,21 @@ class TestSpider(scrapy.spiders.CrawlSpider):
             # Magic sort type randomizes based on some seed value
             # For magic, loop over a few random seeds to try to find all projects
             if url_sort_type == "magic" or url_sort_type == "most_backed" or url_sort_type == "most_funded":
-                seeds = [str(random.randint(0, 999))]
+                #seeds = [str(random.randint(0, 999))]
 
                 #Uncomment this when not testing...
-            #     seeds = [str(random.randint(0, 999)), str(random.randint(0, 999)), str(random.randint(0, 9999)),
-            #              str(random.randint(0, 99999)), str(random.randint(0, 9999999)),str(random.randint(0, 9999999)),
-            #              str(random.randint(0, 999999))]
-            # else:
-            #     seeds = [str(random.randint(0, 999))]
+                seeds = [str(random.randint(0, 999)), str(random.randint(0, 999)), str(random.randint(0, 9999)),
+                         str(random.randint(0, 99999)), str(random.randint(0, 9999999)),str(random.randint(0, 9999999)),
+                         str(random.randint(0, 999999))]
+            else:
+                seeds = [str(random.randint(0, 999))]
 
             for seed in seeds:
 
                 base_url = ["https://www.kickstarter.com/discover/advanced?sort=", url_sort_type, "&seed=", seed]
 
                 # Max page index is 200, loop over all of them
-                for page in range(1, 2):#00):#200): #200):
+                for page in range(1, 200):#200): #200):
 
                     page_number = ["&page=", str(page)]
                     full_url = ""
@@ -118,8 +118,8 @@ class TestSpider(scrapy.spiders.CrawlSpider):
         #print("Test spider found ", percent_live_found, "% of live Kickstarter projects")
 
         log.write_out_log()
-        print(" I'm writing out a log file")
-        time.sleep(5)
+        #print(" I'm writing out a log file...")
+        #time.sleep(5)
         # for url in project_urls:
         #
         #     yield scrapy.Request(url, callback=self.parse_xpaths)
