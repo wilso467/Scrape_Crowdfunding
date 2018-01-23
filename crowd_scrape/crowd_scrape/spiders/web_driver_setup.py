@@ -59,6 +59,6 @@ class web_driver_setup():
 
 
 
-        self. driver = se.webdriver.PhantomJS(driver_path)
+        self.driver = se.webdriver.PhantomJS(driver_path)
 
 
