@@ -19,7 +19,7 @@ class Dumb_Item(scrapy.Item):
 class StupidSpider(scrapy.spiders.CrawlSpider):
 
     name = "dumb"
-    print ("I am a dumb spider.")
+    # print ("I am a dumb spider.")
 
 
 
