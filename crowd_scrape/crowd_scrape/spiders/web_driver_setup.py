@@ -22,7 +22,7 @@ class web_driver_setup():
             raise ValueError(" A non-string was passed into web_driver_setup.__init__ as 'crawl_type' ")
 
         if crawl_type== "test":
-            self.setup_phantom_driver()
+            self.setup_chromedriver()
         elif crawl_type=="log":
             self.setup_chromedriver()
         elif crawl_type=="traq":
