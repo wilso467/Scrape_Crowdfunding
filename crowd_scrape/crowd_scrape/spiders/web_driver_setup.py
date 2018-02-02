@@ -22,7 +22,7 @@ class web_driver_setup():
             raise ValueError(" A non-string was passed into web_driver_setup.__init__ as 'crawl_type' ")
 
         if crawl_type== "test":
-            self.setup_chromedriver()
+            self.setup_phantom_driver()
         elif crawl_type=="log":
             self.setup_chromedriver()
         elif crawl_type=="traq":
@@ -56,8 +56,6 @@ class web_driver_setup():
             driver_path = os.path.join(path, 'phantomjs.exe')
         elif system == 'Linux':
             driver_path = os.path.join(path, 'phantomjs')
-
-
 
         self.driver = se.webdriver.PhantomJS(driver_path)
 

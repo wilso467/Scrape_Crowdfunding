@@ -55,8 +55,8 @@ class TestSpider(scrapy.spiders.CrawlSpider):
 
         # Uncomment this when not testing...
         #url_sort_types = ["newest", "end_date", "magic", "popularity", "most_backed", "most_funded"]
-        url_sort_types = ["newest", "end_date", "magic", "popularity"]
-        #url_sort_types = ["magic"]
+        #url_sort_types = ["newest", "end_date", "magic", "popularity"]
+        url_sort_types = ["newest"]
 
         project_urls = []
 
@@ -66,12 +66,12 @@ class TestSpider(scrapy.spiders.CrawlSpider):
             # Magic sort type randomizes based on some seed value
             # For magic, loop over a few random seeds to try to find all projects
             if url_sort_type == "magic" or url_sort_type == "most_backed" or url_sort_type == "most_funded":
-                #seeds = [str(random.randint(0, 999))]
+                seeds = [str(random.randint(0, 999))]
 
                 #Uncomment this when not testing...
-                seeds = [str(random.randint(0, 999)), str(random.randint(0, 999)), str(random.randint(0, 9999)),
-                         str(random.randint(0, 99999)), str(random.randint(0, 9999999)),str(random.randint(0, 9999999)),
-                         str(random.randint(0, 999999))]
+                # seeds = [str(random.randint(0, 999)), str(random.randint(0, 999)), str(random.randint(0, 9999)),
+                #          str(random.randint(0, 99999)), str(random.randint(0, 9999999)),str(random.randint(0, 9999999)),
+                #          str(random.randint(0, 999999))]
             else:
                 seeds = [str(random.randint(0, 999))]
 
@@ -102,14 +102,14 @@ class TestSpider(scrapy.spiders.CrawlSpider):
                     for element in elements:
 
                         link = element.find_element_by_tag_name("a")
+
                         url = link.get_attribute("href")
 
-                        print(url)
-                        #print(type(url))
+                        #print(url)
 
                         if url not in project_urls:
                             project_urls.append(url)
-                            print url
+                            print("This is the URL that will be passed to the logger ",url)
                             print str(url.encode('utf8'))
                             log.add_url(str(url.encode('utf8')), "open")
 
