@@ -26,7 +26,9 @@ class logger():
             raise ValueError("An unknown crawl_type was passed to the logger.")
 
     def add_url(self, url, status):
-        url_dict = self.url_dict
+
+        #Is this the best kind of bug ?
+        #url_dict = self.url_dict
 
         if type(url) is not str or type(status) is not str:
             raise ValueError("logger.add_url was called with the wrong type ")
@@ -37,13 +39,18 @@ class logger():
 
         # If we find the url, check and see if it is open  or closed
 
-        if url in url_dict:
-            if url_dict[url] == "open" and status == "closed":
-                url_dict[url] = status
+        if url in self.url_dict:
+            if self.url_dict[url] == "open" and status == "closed":
+                self.url_dict[url] = status
+
+                print("I added the following url, "+url+" with status: "+self.url_dict[url])
 
         # If we don't find the url, make an entry with status
         else:
-            url_dict[url] = status
+            self.url_dict[url] = status
+            print("I added the following url, " + url + " with status: " + self.url_dict[url])
+
+
 
     # Writes out the log file in json format which is easy for machines and people to read/write
     def write_out_log(self):

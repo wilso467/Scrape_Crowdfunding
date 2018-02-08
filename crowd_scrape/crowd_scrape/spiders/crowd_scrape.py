@@ -55,8 +55,11 @@ class TestSpider(scrapy.spiders.CrawlSpider):
 
         # Uncomment this when not testing...
         #url_sort_types = ["newest", "end_date", "magic", "popularity", "most_backed", "most_funded"]
-        #url_sort_types = ["newest", "end_date", "magic", "popularity"]
-        url_sort_types = ["newest"]
+        url_sort_types = ["newest", "end_date", "magic", "popularity"]
+        #url_sort_types = ["most_funded"]
+
+        #Randomize sort type to try to find all new projects with repeated scrapes
+        url_sort_types=url_sort_types[random.randint(0, 3)]
 
         project_urls = []
 
@@ -117,6 +120,7 @@ class TestSpider(scrapy.spiders.CrawlSpider):
         print(len(project_urls), " project urls found.")
         #print("Test spider found ", percent_live_found, "% of live Kickstarter projects")
 
+
         log.write_out_log()
         #print(" I'm writing out a log file...")
         #time.sleep(5)
@@ -124,8 +128,9 @@ class TestSpider(scrapy.spiders.CrawlSpider):
         #
         #     yield scrapy.Request(url, callback=self.parse_xpaths)
 
-        for url in project_urls:
-            yield scrapy.Request(url, callback=self.parse)
+        #for url in project_urls:
+        #    yield scrapy.Request(url, callback=self.parse)
+        yield scrapy.Request("https://www.kickstarter.com/discover/advanced", callback=self.parse)
 
         #driver.close()
 
@@ -393,21 +398,35 @@ class LogSpider(scrapy.spiders.CrawlSpider):
 
             if status == "closed":
                 # Get the category and location
-                loc_and_cat = driver.find_element_by_xpath('//*[contains(@class, "NS_projects__category_location")]')
-                kids = loc_and_cat.find_elements_by_xpath('.//*')
-                print("This is the locations", loc_and_cat.text)
-                lc_list = []
-                for kid in kids:
+                #loc_and_cat = driver.find_element_by_xpath('//*[contains(@class, "NS_projects__category_location")]')
+                try:
+                    loc_and_cat = driver.find_element_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "NS_projects__category_location", " " ))]')
 
-                    if len(kid.text) > 3:
-                        print("These are the kids", kid.text)
-                        lc_list.append(kid.text)
+                    kids = loc_and_cat.find_elements_by_xpath('.//*')
 
-                location = lc_list[0]
-                category = lc_list[1]
+                    print("This is the locations", loc_and_cat.text)
+                    lc_list = []
+                    for kid in kids:
 
-                item['location'] = location
-                item['category'] = category
+                        if len(kid.text) > 3:
+                            print("These are the kids", kid.text)
+                            lc_list.append(kid.text)
+
+                    location = lc_list[0]
+                    category = lc_list[1]
+
+                    item['location'] = location
+                    item['category'] = category
+                except: # Closed failed projects seem to need same xpath now as open projects
+                    #This is ugly but ok...
+                    location = response.xpath('//*[(@class = "nowrap navy-700 flex items-center medium type-12")]').re(r'(\n.*\n)')[1].strip() #[2].strip()
+                    #print("The location is ", location)
+                    item['location'] = location
+
+                    # Gets the category of the project
+                    category = response.xpath('//*[(@class = "nowrap navy-700 flex items-center medium mr3 type-12")]').re(r'(\n.*\n)')[1].strip()
+                    #print("The category is ", category)
+                    item['category'] = category
             elif status == "open":
                 try:
 
@@ -442,7 +461,8 @@ class LogSpider(scrapy.spiders.CrawlSpider):
             item['num_vids'] = len(vids)
 
             # Get numbers like number of updates, FAQs, etc
-            element = driver.find_element_by_xpath('//*[((@class = "NS_projects__content"))]')
+            #element = driver.find_element_by_xpath('//*[((@class = "NS_projects__content"))]')
+            element = driver.find_element_by_xpath('//*[(contains(@class,"NS_projects__content"))]')
 
             # Updates
             sub_element = element.find_element_by_xpath('//a[(@data-content="updates")]')
@@ -503,7 +523,8 @@ class LogSpider(scrapy.spiders.CrawlSpider):
 
             reward_levels = "{"
             for pledges in pledge_list:
-                reward_levels = reward_levels+str(pledges)+";"
+                pledges = unicode(pledges)
+                reward_levels = reward_levels+pledges+";"
             reward_levels = reward_levels + "}"
 
             # Concatenated list of reward/pledge $ amounts
