@@ -1,6 +1,6 @@
 import json
 import sys
-
+import simplejson
 files_to_join = sys.argv[1:]
 
 data = {}
