@@ -16,7 +16,7 @@ for f in files_to_join:
         # cause the values for those keys to be updated to be those of b
         data.update(d)
 
-with open('merged_output.json', 'wt') as fout:
+with open('kickstarter.log', 'wt') as fout:
     fout.write(
         json.dumps(data)
     )
