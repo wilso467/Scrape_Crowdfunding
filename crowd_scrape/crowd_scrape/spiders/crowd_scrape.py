@@ -254,10 +254,10 @@ class LogSpider(scrapy.spiders.CrawlSpider):
             # Check the status of the project
             stat_live = driver.find_elements_by_xpath('//div[@class="Campaign-state-live"]')
             if len(stat_live) > 0:
-                print("The status of project "+str(response.url)+" is live.")
+                #print("The status of project "+str(response.url)+" is live.")
                 status = "open"
             else:
-                print("Live state not found.")
+                #print("Live state not found.")
                 status = "closed"
 
             # add url has all the logic to adjust status in log file
@@ -326,7 +326,7 @@ class LogSpider(scrapy.spiders.CrawlSpider):
                     pledge_numbers = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "mb0", " " ))]'
                                                     '//*[contains(concat( " ", @class, " " ),'
                                                     ' concat( " ", "money", " " ))]').re(
-                        r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')
+                        r'[$\d\.\,\s]+[-0-9.,]+[-0-9.,a-zA-Z]*\b')
 
                     item['total_raised'] = pledge_numbers
                 except:
@@ -341,7 +341,7 @@ class LogSpider(scrapy.spiders.CrawlSpider):
                 try:
                     # Use this one
                     goal = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]').re(
-                        r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0].strip()
+                        r'[$\d\.\,\s]+[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0].strip()
                     # goal = response.xpath('//*[@id="content-wrap"]/section/div/div[3]/div/div/div[3]/div[1]/
                     # span[3]/span[1]').re(r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0]
                     #
@@ -357,7 +357,9 @@ class LogSpider(scrapy.spiders.CrawlSpider):
                 try:
                     goal = response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "navy-500", " " ))]'
                                       '//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]').re(
-                        r'\$[-0-9.,]+[-0-9.,a-zA-Z]*\b')
+                        r'[$\d\.\,\s]+[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0].strip()
+
+
 
                     item['funding_target'] = goal
 
@@ -365,6 +367,20 @@ class LogSpider(scrapy.spiders.CrawlSpider):
                     print('Caught a super bad error parsing funding goal')
                     item['funding_target'] = 'NOT FOUND'
                     pass
+                if item['funding_target'] == 'NOT FOUND':
+                    try:
+                        goal = \
+                        response.xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "lh3-lg", " " ))]'
+                                       '//*[contains(concat( " ", @class, " " ), concat( " ", "money", " " ))]').re(
+                            r'[$\d\.\,\s]+[-0-9.,]+[-0-9.,a-zA-Z]*\b')[0].strip()
+
+                        item['funding_target'] = goal
+
+                    except:
+                        item['funding_target'] = 'NOT FOUND'
+                        pass
+
+
 
             try:
                 # Use this one
@@ -530,7 +546,7 @@ class LogSpider(scrapy.spiders.CrawlSpider):
             # Concatenated list of reward/pledge $ amounts
             item['reward_levels'] = reward_levels
             # Number of different pledge values
-            #item['number_of_reward_levels'] = len(pledge_list)
+            item['number_of_reward_levels'] = len(pledge_list)
 
             # Gets all the description text
 
