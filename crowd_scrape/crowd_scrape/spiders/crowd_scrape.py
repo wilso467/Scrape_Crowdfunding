@@ -551,10 +551,21 @@ class LogSpider(scrapy.spiders.CrawlSpider):
             # Gets all the description text
 
             description_text = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "formatted-lists", " " ))]//p')
+            if len(description_text)==0:
+                # Catches the case where description text isn't separated into paragraph elements
+                description_text = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "formatted-lists", " " ))]')
             description = "{"
             for descriptions in description_text:
                 description = description+descriptions.text
+
+            risk_text = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "js-risks", " " ))]//p')
+
+            # Gets the description from the risks and challenges section
+            for risks in risk_text:
+                description = risks.text
             description = description+"}"
+
+            #TODO also grab from "js-risks" //*[contains(concat( " ", @class, " " ), concat( " ", "js-risks", " " ))]
             item['description'] = description
 
             # Find and concatenate all the comments for a project
@@ -610,12 +621,17 @@ class LogSpider(scrapy.spiders.CrawlSpider):
             #item['number_of_faqs'] = len(faq_list)
 
             # Gets the text for updates
-            update_texts = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "grid-post__content", " " ))]//p')
+            driver.get((response.url) + "/posts")
+            #update_texts = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "grid-post__content", " " ))]//p')
+            update_texts = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "formatted-lists", " " ))]//p')
             update_text_list = '{'
             for update_text in update_texts:
                 update_text_list = update_text_list+update_text.text+";"
             update_text_list = update_text_list+"}"
             item['updates'] = update_text_list
+
+            #TODO use this //*[contains(concat( " ", @class, " " ), concat( " ", "formatted-lists", " " ))]//p for updates
+            # on ~/posts/
 
             #Item in this context is all the info about a single project
 
