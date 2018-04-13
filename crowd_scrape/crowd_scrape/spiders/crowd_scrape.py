@@ -264,7 +264,7 @@ class LogSpider(scrapy.spiders.CrawlSpider):
             log.add_url(response.url, status)
 
             if status == "closed":
-                print("Find the dates for a closed project")
+                #print("Find the dates for a closed project")
 
                 funding_period = driver.find_element_by_xpath('//*[@class="NS_campaigns__funding_period"]')
                 beg_end = funding_period.find_elements_by_xpath('.//time')
@@ -272,14 +272,14 @@ class LogSpider(scrapy.spiders.CrawlSpider):
                 start_date = beg_end[0].get_attribute('datetime')
                 end_date = beg_end[1].get_attribute('datetime')
 
-                print("This is the start date for a closed project", start_date)
-                print("This is the end date for a closed project", end_date)
+                #print("This is the start date for a closed project", start_date)
+                #print("This is the end date for a closed project", end_date)
 
                 item['start_date'] = start_date
                 item['end_date'] = end_date
 
             elif status == "open":
-                print("Find the dates for an open project")
+                #print("Find the dates for an open project")
 
                 # start_date_element = driver.find_element_by_xpath('//*[contains(@class, "js-state_changed_at")]')
                 # start_date_element = driver.find_element_by_xpath('//*[@class="js-state_changed_at"]')
@@ -289,7 +289,7 @@ class LogSpider(scrapy.spiders.CrawlSpider):
 
                 end_date_element = driver.find_element_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "type-12", " " ))]//*[contains(concat( " ", @class, " " ), concat( " ", "js-adjust-time", " " ))]')
 
-                print("This is the end date for an open project", end_date_element.get_attribute('datetime'))
+                #print("This is the end date for an open project", end_date_element.get_attribute('datetime'))
 
                 # start_date = start_date_element.get_attribute('datetime')
                 start_date = driver.find_element_by_xpath('//*[@class="js-adjust-time"]').text
@@ -420,12 +420,12 @@ class LogSpider(scrapy.spiders.CrawlSpider):
 
                     kids = loc_and_cat.find_elements_by_xpath('.//*')
 
-                    print("This is the locations", loc_and_cat.text)
+                    #print("This is the locations", loc_and_cat.text)
                     lc_list = []
                     for kid in kids:
 
                         if len(kid.text) > 3:
-                            print("These are the kids", kid.text)
+                            #print("These are the kids", kid.text)
                             lc_list.append(kid.text)
 
                     location = lc_list[0]
@@ -482,29 +482,29 @@ class LogSpider(scrapy.spiders.CrawlSpider):
 
             # Updates
             sub_element = element.find_element_by_xpath('//a[(@data-content="updates")]')
-            print("This is the sub_element", sub_element.text.encode('utf8'))
+            #print("This is the sub_element", sub_element.text.encode('utf8'))
             text = sub_element.text.encode('utf8')
             result = [int(s) for s in text.split() if s.isdigit()]
 
             if len(result) == 0:
                 result = 0
 
-            print(" Result of regex search ", result)
+            #print(" Result of regex search ", result)
             item['number_of_updates'] = result
 
             # FAQs
             sub_element = element.find_element_by_xpath('//a[(@data-content="faqs")]')
-            print("This is the sub_element", sub_element.text.encode('utf8'))
+            #print("This is the sub_element", sub_element.text.encode('utf8'))
             text = sub_element.text.encode('utf8')
             result = [int(s) for s in text.split() if s.isdigit()]
             if len(result) == 0:
                 result = 0
-            print(" Result of regex search ", result)
+            #print(" Result of regex search ", result)
             item['number_of_faqs'] = result
 
             # Comments
             sub_element = element.find_element_by_xpath('//a[(@data-content="comments")]')
-            print("This is the sub_element", sub_element.text.encode('utf8'))
+            #print("This is the sub_element", sub_element.text.encode('utf8'))
             text = sub_element.text.encode('utf8')
             result = [int(s) for s in text.split() if s.isdigit()]
 
@@ -562,10 +562,10 @@ class LogSpider(scrapy.spiders.CrawlSpider):
 
             # Gets the description from the risks and challenges section
             for risks in risk_text:
-                description = risks.text
+                description = description+risks.text
             description = description+"}"
 
-            #TODO also grab from "js-risks" //*[contains(concat( " ", @class, " " ), concat( " ", "js-risks", " " ))]
+
             item['description'] = description
 
             # Find and concatenate all the comments for a project
@@ -621,17 +621,23 @@ class LogSpider(scrapy.spiders.CrawlSpider):
             #item['number_of_faqs'] = len(faq_list)
 
             # Gets the text for updates
-            driver.get((response.url) + "/posts")
-            #update_texts = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "grid-post__content", " " ))]//p')
-            update_texts = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "formatted-lists", " " ))]//p')
-            update_text_list = '{'
-            for update_text in update_texts:
-                update_text_list = update_text_list+update_text.text+";"
-            update_text_list = update_text_list+"}"
-            item['updates'] = update_text_list
 
-            #TODO use this //*[contains(concat( " ", @class, " " ), concat( " ", "formatted-lists", " " ))]//p for updates
-            # on ~/posts/
+            # Updates can be on multiple pages
+            # But lets not go through update pages if we have no updates
+
+            for i in range(1,10):
+
+                driver.get((response.url) + "/posts?page="+str(i))
+                #update_texts = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "grid-post__content", " " ))]//p')
+                update_texts = driver.find_elements_by_xpath('//*[contains(concat( " ", @class, " " ), concat( " ", "formatted-lists", " " ))]//p')
+                update_text_list = '{'
+                for update_text in update_texts:
+                    update_text_list = update_text_list+update_text.text+" "
+                update_text_list = update_text_list+"}"
+                item['updates'] = update_text_list
+
+
+
 
             #Item in this context is all the info about a single project
 

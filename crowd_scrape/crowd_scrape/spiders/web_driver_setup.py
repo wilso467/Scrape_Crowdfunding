@@ -37,13 +37,14 @@ class web_driver_setup():
         path = os.path.dirname(__file__)
         system = platform.system()
         if system == 'Windows':
+            print(path)
             driver_path = os.path.join(path, 'chromedriver.exe')
         elif system == 'Linux':
             driver_path = os.path.join(path, 'chromedriver')
         elif system == 'Darwin':
             driver_path = os.path.join(path, 'chromedrivermac')
 
-        print("This is the chrome driver path", driver_path)
+        #print("This is the chrome driver path", driver_path)
 
         self.driver = se.webdriver.Chrome(driver_path)
 

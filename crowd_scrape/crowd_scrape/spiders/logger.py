@@ -16,8 +16,8 @@ class logger():
             raise ValueError("A non-string was passed to logger.init()")
         if crawl_type == "traq" or "test" or "log":
 
-            with open("test.log", 'r') as f:
-                if os.stat("test.log").st_size > 0:
+            with open("kickstarter.log", 'r') as f:
+                if os.stat("kickstarter.log").st_size > 0:
                     self.url_dict = simplejson.load(f)
                     # print("The json file ", f.name, " was loaded.")
                 else:
@@ -56,7 +56,7 @@ class logger():
     def write_out_log(self):
         url_dict = self.url_dict
         # print("This is the url dict", url_dict)
-        json.dump(url_dict, open("test.log", 'w'))
+        json.dump(url_dict, open("kickstarter.log", 'w'))
         print("The logfile write out is complete.")
 
     def strip_ref(self, url):
