@@ -634,9 +634,7 @@ class LogSpider(scrapy.spiders.CrawlSpider):
                 for update_text in update_texts:
                     update_text_list = update_text_list+update_text.text+" "
                 update_text_list = update_text_list+"}"
-                item['updates'] = update_text_list
-
-
+            item['updates'] = update_text_list
 
 
             #Item in this context is all the info about a single project
